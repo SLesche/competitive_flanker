@@ -77,7 +77,7 @@ function create_flanker_trial(block_possible_stimuli, mapped_responses) {
 }
 
 function get_block_instruction(mapped_responses){
-  var block_instruction_message = "";
+  let block_instruction_message = "";
 
   let letter_count = 0;
 
@@ -118,10 +118,10 @@ function create_fixation_cross(fixation_cross_dur){
 }
 
 function create_feedback(){
-    var feedback = {
+    let feedback = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
-        var last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
+        const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         if (last_trial_correct) {
           return '<p class = "normal-text"><span style = "color: green">Richtig</span></p>'; 
         } else {
@@ -138,8 +138,8 @@ function create_feedback(){
 }
 
 for (let iblock = 0; iblock < n_blocks; iblock++){
-  var block_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
-  var mapped_responses = map_responses_to_letters(subject_number, block_stimuli);
+  const block_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
+  const mapped_responses = map_responses_to_letters(subject_number, block_stimuli);
 
   // Instruction screen here
   timeline.push(get_block_instruction(mapped_responses))

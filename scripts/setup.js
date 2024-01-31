@@ -1,4 +1,4 @@
-var jsPsych = initJsPsych(
+let jsPsych = initJsPsych(
     /**
     {
         on_finish: function() {
@@ -10,14 +10,14 @@ var jsPsych = initJsPsych(
 
 const experiment_name = "Flanker Task";
 const experiment_short_name = "flanker_task";
-var init_date = new Date();
+let init_date = new Date();
     jsPsych.data.addProperties({
         date: ("0" + init_date.getDate()).slice(-2) + '_' + ("0" + (init_date.getMonth() + 1)).slice(-2) + '_' + init_date.getFullYear(),
         time: init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds(),
     });
 
-var init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
-var timeline = [];
+let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
+let timeline = [];
 
 const n_trials = 10;
 const n_blocks = 2;
@@ -41,4 +41,3 @@ jsPsych.data.addProperties({
 });
 
 const experiment_file = "data/" + experiment_short_name + "_" + subject_number + "_" + init_time + ".csv"
-console.log(experiment_file)
