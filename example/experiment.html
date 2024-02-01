@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>My experiment</title>
+    <link rel="stylesheet" href="css/survey.css">
+    <script src="jspsych/jspsych.js"></script>
+    <script src="jspsych/plugin-instructions.js"></script>
+    <script src="jspsych/plugin-survey.js"></script>
+    <script src="jspsych/plugin-html-keyboard-response.js"></script>
+    <script src="jspsych/plugin-html-button-response.js"></script>
+    <script src="jspsych/plugin-mood-crowd-keyboard-response.js"></script>
+    <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+    <style>
+      .jspsych-content {
+        max-width: 1000px;
+      }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    // show a warning upon reload/closing the window to avoid loosing data
+    window.onbeforeunload = function() {
+      return "Data will be lost if you leave the page, are you sure?";
+    };
+    // Shorter test mode with less trials and blocks
+    const TEST = false;
+    if (TEST) {
+      alert("You are running in test mode");
+    }
+    const jsPsych = initJsPsych({
+      // store only information from the survey and the trial blocks (contains the RTs)
+    });
+
+    var rand_subject_id = jsPsych.randomization.randomID(8);
+    // add the ID to the data for all trials
+    jsPsych.data.addProperties({ID: rand_subject_id});
+
+    // preload all images for instant display
+    function preloadImage(url) {
+      var img=new Image();
+      img.src=url;
+      return img;
+    };
+    const IMAGE_NAMES = ['AF01ANS.PNG', 'BF01ANS.PNG', 'AF01HAS.PNG', 'BF01HAS.PNG', 'AF01NES.PNG', 'BF01NES.PNG', 'AF02ANS.PNG', 'BF02ANS.PNG', 'AF02HAS.PNG', 'BF02HAS.PNG', 'AF02NES.PNG', 'BF02NES.PNG', 'BF03ANS.PNG', 'AF03ANS.PNG', 'BF03HAS.PNG', 'AF03HAS.PNG', 'BF03NES.PNG', 'AF03NES.PNG', 'AF04ANS.PNG', 'BF04ANS.PNG', 'AF04HAS.PNG', 'BF04HAS.PNG', 'BF04NES.PNG', 'AF04NES.PNG', 'BF05ANS.PNG', 'AF05ANS.PNG', 'BF05HAS.PNG', 'AF05HAS.PNG', 'AF05NES.PNG', 'BF05NES.PNG', 'AF06ANS.PNG', 'BF06ANS.PNG', 'BF06HAS.PNG', 'AF06HAS.PNG', 'AF06NES.PNG', 'BF06NES.PNG', 'AF07ANS.PNG', 'BF07ANS.PNG', 'BF07HAS.PNG', 'AF07HAS.PNG', 'BF07NES.PNG', 'AF07NES.PNG', 'AF08ANS.PNG', 'BF08ANS.PNG', 'AF08HAS.PNG', 'BF08HAS.PNG', 'AF08NES.PNG', 'BF08NES.PNG', 'BF09ANS.PNG', 'AF09ANS.PNG', 'AF09HAS.PNG', 'BF09HAS.PNG', 'BF09NES.PNG', 'AF09NES.PNG', 'AF10ANS.PNG', 'BF10ANS.PNG', 'AF10HAS.PNG', 'BF10HAS.PNG', 'AF10NES.PNG', 'BF10NES.PNG', 'AF11ANS.PNG', 'BF11ANS.PNG', 'BF11HAS.PNG', 'AF11HAS.PNG', 'AF11NES.PNG', 'BF11NES.PNG', 'BF12ANS.PNG', 'AF12ANS.PNG', 'AF12HAS.PNG', 'BF12HAS.PNG', 'AF12NES.PNG', 'BF12NES.PNG', 'AF13ANS.PNG', 'AF13HAS.PNG', 'BF13HAS.PNG', 'AF13NES.PNG', 'BF13NES.PNG', 'BF14ANS.PNG', 'AF14ANS.PNG', 'AF14HAS.PNG', 'BF14HAS.PNG', 'AF14NES.PNG', 'BF14NES.PNG', 'BF15ANS.PNG', 'AF15ANS.PNG', 'AF15HAS.PNG', 'BF15HAS.PNG', 'AF15NES.PNG', 'BF15NES.PNG', 'AF16ANS.PNG', 'BF16ANS.PNG', 'AF16HAS.PNG', 'BF16HAS.PNG', 'BF16NES.PNG', 'AF16NES.PNG', 'AF17ANS.PNG', 'BF17ANS.PNG', 'BF17HAS.PNG', 'AF17HAS.PNG', 'BF17NES.PNG', 'AF17NES.PNG', 'BF18ANS.PNG', 'AF18ANS.PNG', 'BF18HAS.PNG', 'AF18HAS.PNG', 'BF18NES.PNG', 'AF18NES.PNG', 'AF19ANS.PNG', 'BF19ANS.PNG', 'BF19HAS.PNG', 'AF19HAS.PNG', 'BF19NES.PNG', 'AF19NES.PNG', 'BF20ANS.PNG', 'AF20ANS.PNG', 'AF20HAS.PNG', 'BF20HAS.PNG', 'BF20NES.PNG', 'AF20NES.PNG', 'BF21ANS.PNG', 'AF21ANS.PNG', 'BF21HAS.PNG', 'AF21HAS.PNG', 'AF21NES.PNG', 'BF21NES.PNG', 'BF22ANS.PNG', 'AF22ANS.PNG', 'AF22HAS.PNG', 'BF22HAS.PNG', 'BF22NES.PNG', 'AF22NES.PNG', 'AF23ANS.PNG', 'BF23ANS.PNG', 'AF23HAS.PNG', 'BF23HAS.PNG', 'BF23NES.PNG', 'AF23NES.PNG', 'BF24ANS.PNG', 'AF24ANS.PNG', 'AF24HAS.PNG', 'BF24HAS.PNG', 'AF24NES.PNG', 'BF24NES.PNG', 'AF25ANS.PNG', 'BF25ANS.PNG', 'AF25HAS.PNG', 'BF25HAS.PNG', 'AF25NES.PNG', 'BF25NES.PNG', 'BF26ANS.PNG', 'AF26ANS.PNG', 'BF26HAS.PNG', 'AF26HAS.PNG', 'AF26NES.PNG', 'BF26NES.PNG', 'AF27ANS.PNG', 'BF27ANS.PNG', 'BF27HAS.PNG', 'AF27HAS.PNG', 'AF27NES.PNG', 'BF27NES.PNG', 'BF28ANS.PNG', 'AF28ANS.PNG', 'AF28HAS.PNG', 'BF28HAS.PNG', 'BF28NES.PNG', 'AF28NES.PNG', 'AF29ANS.PNG', 'BF29ANS.PNG', 'BF29HAS.PNG', 'AF29HAS.PNG', 'AF29NES.PNG', 'BF29NES.PNG', 'BF30ANS.PNG', 'AF30ANS.PNG', 'BF30HAS.PNG', 'AF30HAS.PNG', 'BF30NES.PNG', 'AF30NES.PNG', 'AF31ANS.PNG', 'BF31ANS.PNG', 'AF31HAS.PNG', 'BF31HAS.PNG', 'BF31NES.PNG', 'AF31NES.PNG', 'BF32ANS.PNG', 'AF32ANS.PNG', 'AF32HAS.PNG', 'BF32HAS.PNG', 'AF32NES.PNG', 'BF32NES.PNG', 'BF33ANS.PNG', 'AF33ANS.PNG', 'BF33HAS.PNG', 'AF33HAS.PNG', 'BF33NES.PNG', 'AF33NES.PNG', 'BF34ANS.PNG', 'AF34ANS.PNG', 'BF34HAS.PNG', 'AF34HAS.PNG', 'BF34NES.PNG', 'AF34NES.PNG', 'AF35ANS.PNG', 'BF35ANS.PNG', 'AF35HAS.PNG', 'BF35HAS.PNG', 'BF35NES.PNG', 'AF35NES.PNG', 'AF36NES.PNG', 'AF37NES.PNG', 'AF38NES.PNG', 'AF39NES.PNG', 'AF40NES.PNG', 'AF41NES.PNG', 'AF42NES.PNG', 'AF43NES.PNG', 'AF44NES.PNG', 'AF45NES.PNG', 'AF46NES.PNG', 'AF47NES.PNG', 'AF48NES.PNG', 'AF49NES.PNG', 'AF50NES.PNG', 'AF51NES.PNG', 'AF52NES.PNG', 'AF53NES.PNG', 'AF54NES.PNG', 'AF55NES.PNG', 'AF56NES.PNG', 'AF57NES.PNG', 'AF58NES.PNG', 'AF59NES.PNG', 'AF60NES.PNG', 'AF61NES.PNG', 'AF62NES.PNG', 'AF63NES.PNG', 'AF64NES.PNG', 'AF65NES.PNG', 'AF66NES.PNG', 'AF67NES.PNG', 'BM01ANS.PNG', 'AM01ANS.PNG', 'AM01HAS.JPG', 'BM01HAS.JPG', 'BM01HAS.PNG', 'AM01HAS.PNG', 'AM01NES.PNG', 'BM01NES.PNG', 'AM02ANS.PNG', 'BM02HAS.JPG', 'AM02HAS.JPG', 'BM02HAS.PNG', 'AM02HAS.PNG', 'AM02NES.PNG', 'BM02NES.PNG', 'AM03ANS.PNG', 'BM03ANS.PNG', 'AM03HAS.JPG', 'BM03HAS.JPG', 'BM03HAS.PNG', 'AM03HAS.PNG', 'AM03NES.PNG', 'BM03NES.PNG', 'AM04ANS.PNG', 'BM04ANS.PNG', 'AM04HAS.JPG', 'BM04HAS.JPG', 'AM04HAS.PNG', 'BM04HAS.PNG', 'AM04NES.PNG', 'BM04NES.PNG', 'BM05ANS.PNG', 'AM05ANS.PNG', 'BM05HAS.JPG', 'AM05HAS.JPG', 'BM05HAS.PNG', 'AM05HAS.PNG', 'AM05NES.PNG', 'BM05NES.PNG', 'BM06ANS.PNG', 'AM06ANS.PNG', 'BM06HAS.JPG', 'AM06HAS.JPG', 'AM06HAS.PNG', 'BM06HAS.PNG', 'BM06NES.PNG', 'AM06NES.PNG', 'BM07ANS.PNG', 'AM07ANS.PNG', 'AM07HAS.JPG', 'BM07HAS.JPG', 'BM07HAS.PNG', 'AM07HAS.PNG', 'AM07NES.PNG', 'BM07NES.PNG', 'BM08ANS.PNG', 'AM08ANS.PNG', 'BM08HAS.JPG', 'AM08HAS.JPG', 'AM08HAS.PNG', 'BM08HAS.PNG', 'BM08NES.PNG', 'AM08NES.PNG', 'AM09ANS.PNG', 'BM09ANS.PNG', 'BM09HAS.JPG', 'AM09HAS.JPG', 'AM09HAS.PNG', 'BM09HAS.PNG', 'BM09NES.PNG', 'AM09NES.PNG', 'BM10ANS.PNG', 'AM10ANS.PNG', 'AM10HAS.JPG', 'BM10HAS.JPG', 'AM10HAS.PNG', 'BM10HAS.PNG', 'BM10NES.PNG', 'AM10NES.PNG', 'AM11ANS.PNG', 'BM11ANS.PNG', 'BM11HAS.JPG', 'AM11HAS.JPG', 'BM11HAS.PNG', 'AM11HAS.PNG', 'AM11NES.PNG', 'BM11NES.PNG', 'BM12ANS.PNG', 'AM12HAS.JPG', 'BM12HAS.JPG', 'BM12HAS.PNG', 'AM12HAS.PNG', 'BM12NES.PNG', 'BM13ANS.PNG', 'AM13ANS.PNG', 'BM13HAS.JPG', 'AM13HAS.JPG', 'AM13HAS.PNG', 'BM13HAS.PNG', 'AM13NES.PNG', 'BM13NES.PNG', 'BM14ANS.PNG', 'AM14ANS.PNG', 'BM14HAS.JPG', 'AM14HAS.JPG', 'BM14HAS.PNG', 'AM14HAS.PNG', 'AM14NES.PNG', 'BM14NES.PNG', 'BM15ANS.PNG', 'AM15HAS.JPG', 'AM15HAS.PNG', 'AM15NES.PNG', 'AM16ANS.PNG', 'BM16ANS.PNG', 'AM16HAS.JPG', 'BM16HAS.JPG', 'AM16HAS.PNG', 'BM16HAS.PNG', 'BM16NES.PNG', 'AM17ANS.PNG', 'BM17ANS.PNG', 'AM17HAS.JPG', 'BM17HAS.JPG', 'BM17HAS.PNG', 'AM17HAS.PNG', 'AM17NES.PNG', 'BM18ANS.PNG', 'AM18ANS.PNG', 'AM18HAS.JPG', 'BM18HAS.JPG', 'AM18HAS.PNG', 'BM18HAS.PNG', 'AM18NES.PNG', 'AM19ANS.PNG', 'BM19HAS.JPG', 'AM19HAS.JPG', 'AM19HAS.PNG', 'BM19HAS.PNG', 'AM20ANS.PNG', 'BM20HAS.JPG', 'AM20HAS.JPG', 'AM20HAS.PNG', 'BM20HAS.PNG', 'BM21ANS.PNG', 'AM21ANS.PNG', 'BM21HAS.JPG', 'AM21HAS.JPG', 'AM21HAS.PNG', 'BM21HAS.PNG', 'AM21NES.PNG', 'BM21NES.PNG', 'AM22ANS.PNG', 'BM22ANS.PNG', 'BM22HAS.JPG', 'AM22HAS.JPG', 'AM22HAS.PNG', 'BM22HAS.PNG', 'AM22NES.PNG', 'BM22NES.PNG', 'AM23ANS.PNG', 'BM23ANS.PNG', 'AM23HAS.JPG', 'BM23HAS.JPG', 'AM23HAS.PNG', 'BM23HAS.PNG', 'AM23NES.PNG', 'BM23NES.PNG', 'AM24ANS.PNG', 'BM24ANS.PNG', 'BM24HAS.JPG', 'AM24HAS.JPG', 'AM24HAS.PNG', 'BM24HAS.PNG', 'BM24NES.PNG', 'BM25ANS.PNG', 'AM25ANS.PNG', 'AM25HAS.JPG', 'BM25HAS.JPG', 'AM25HAS.PNG', 'BM25HAS.PNG', 'AM25NES.PNG', 'BM25NES.PNG', 'AM26ANS.PNG', 'BM26ANS.PNG', 'BM26HAS.JPG', 'AM26HAS.JPG', 'BM26HAS.PNG', 'AM26HAS.PNG', 'AM26NES.PNG', 'BM26NES.PNG', 'BM27ANS.PNG', 'AM27ANS.PNG', 'AM27HAS.JPG', 'BM27HAS.JPG', 'AM27HAS.PNG', 'BM27HAS.PNG', 'BM27NES.PNG', 'AM27NES.PNG', 'BM28ANS.PNG', 'AM28ANS.PNG', 'BM28HAS.JPG', 'BM28HAS.PNG', 'BM28NES.PNG', 'AM28NES.PNG', 'AM29ANS.PNG', 'BM29ANS.PNG', 'AM29HAS.JPG', 'BM29HAS.JPG', 'BM29HAS.PNG', 'AM29HAS.PNG', 'AM29NES.PNG', 'BM30ANS.PNG', 'AM30ANS.PNG', 'BM30HAS.JPG', 'AM30HAS.JPG', 'BM30HAS.PNG', 'AM30HAS.PNG', 'AM30NES.PNG', 'BM30NES.PNG', 'BM31ANS.PNG', 'AM31ANS.PNG', 'AM31HAS.JPG', 'BM31HAS.JPG', 'AM31HAS.PNG', 'BM31HAS.PNG', 'BM31NES.PNG', 'AM31NES.PNG', 'AM32ANS.PNG', 'BM32ANS.PNG', 'BM32HAS.JPG', 'AM32HAS.JPG', 'BM32HAS.PNG', 'AM32HAS.PNG', 'AM32NES.PNG', 'BM32NES.PNG', 'AM33ANS.PNG', 'BM33ANS.PNG', 'AM33HAS.JPG', 'BM33HAS.JPG', 'BM33HAS.PNG', 'AM33HAS.PNG', 'AM33NES.PNG', 'BM33NES.PNG', 'BM34ANS.PNG', 'AM34ANS.PNG', 'BM34HAS.JPG', 'AM34HAS.JPG', 'AM34HAS.PNG', 'BM34HAS.PNG', 'BM34NES.PNG', 'AM34NES.PNG', 'AM35ANS.PNG', 'BM35ANS.PNG', 'BM35HAS.JPG', 'AM35HAS.JPG', 'BM35HAS.PNG', 'AM35HAS.PNG', 'BM35NES.PNG', 'AM35NES.PNG'];
+    // store them so they remain loaded
+    var images = {};
+    for (const name of IMAGE_NAMES) {
+      images[name] = preloadImage('img/' + name);
+    }
+
+    // initialize counters (practice block has block_num 0)
+	var block_num = 0;
+	var trial_num = 1;
+
+    // produce all possible factor combinations
+    const factors = {
+      num_neutral: [5,7,13,15],
+      happy_faces: [true, false],
+    };
+    if (TEST) {
+      block_variables = jsPsych.randomization.factorial(factors, 1);
+      practice_block_variables = jsPsych.randomization.factorial(factors, 1);
+    } else {
+      block_variables = jsPsych.randomization.factorial(factors, 10);
+      practice_block_variables = jsPsych.randomization.factorial(factors, 2);
+    }
+
+    const hello_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<p>Hallo! Schön, dass du da bist!<br />Vielen Dank, dass du dich entschieden hast, an der Studie \"Wie schaut die Crowd?\" teilzunehmen.<br />Im Folgenden werden zunächst ein paar Daten zu deiner Person erfragt.</p>",
+      choices: ['Weiter'],
+	  data: {type: 'welcome'},
+    };
+    var survey_trial = {
+      type: jsPsychSurvey,
+      pages: [
+        [
+          {
+            type: 'text',
+            prompt: "Alter",
+            name: 'age',
+            textbox_columns: 5,
+            required: true,
+          },
+          {
+            type: 'multi-choice',
+            prompt: "Geschlecht",
+            options: ['weiblich', 'männlich', 'divers', 'sonstige'],
+            name: 'gender',
+            required: true,
+          },
+          {
+            type: 'text',
+            prompt: "Tätigkeit",
+            name: 'occupation',
+            required: true,
+          },
+	  /*
+          {
+            type: 'multi-choice',
+            prompt: "Tätigkeit",
+            options: ['Schüler*in'],
+            name: 'occupation',
+            required: true,
+          },
+	  */
+          {
+            type: 'text',
+            prompt: "Studienfach (bei Studierenden)",
+            name: 'subject',
+            required: false,
+          },
+        ]
+      ],
+      title: 'Demographische Daten',
+      button_label_next: 'Weiter',
+      button_label_back: 'Zurück',
+      button_label_finish: 'Weiter',
+      show_question_numbers: 'onPage',
+      data: {type: 'demographics'},
+    };
+    var instructions_trial = {
+      type: jsPsychInstructions,
+      pages: [
+			'Im Folgenden werden dir jeweils 20 Gesichter präsentiert. Einige Personen werden dabei einen <b>neutralen</b>, andere einen <b>emotionalen</b> Gesichtsausdruck zeigen.<br /> Es werden dir immer <b>neutrale</b> Gesichtsausdrücke gemeinsam mit <b>emotionalen</b> Gesichtsausdrücken gezeigt. Welche Emotion das ist, glücklich <b>oder</b> wütend, wird dir davor angezeigt.',
+			'Deine Aufgabe ist es zu entscheiden, ob mehr Gesichter einen <b>neutralen</b> oder einen <b>emotionalen</b> Gesichtsausdruck zeigen. Hierbei ist es wichtig, dass du nicht abzählst, sondern den Gesamteindruck möglichst schnell abschätzt.<br />Wenn <b>neutrale</b> Gesichter überwiegen, drücke die Taste <b>S</b>.<br />Wenn <b>emotionale</b> (<i>wütende</i> oder <i>glückliche</i>) Gesichter überwiegen, drücke die Taste <b>K</b>.<br />Antworte so schnell und präzise wie möglich!',
+			'Es folgen zunächst einige Übungsdurchgänge. Du erhältst nach jedem Durchgang Feedback, ob deine Einschätzung richtig war. Zur Erinnerung:<br /><br />Wenn <b>neutrale</b> Gesichter überwiegen, drücke die Taste <b>S</b>.<br />Wenn <b>emotionale</b> Gesichter überwiegen, drücke die Taste <b>K</b>.<br /><br />Hierbei ist es wichtig, dass du nicht abzählst, sondern den Gesamteindruck möglichst schnell abschätzt.<br />Bitte antworte so schnell und präzise wie möglich.'
+      ],
+      show_clickable_nav: true,
+      button_label_next: 'Weiter',
+      button_label_previous: 'Zurück',
+    };
+    const instructions_trial_2 = {
+      type: jsPsychHtmlKeyboardResponse,
+		      stimulus: "Die Übungsdurchgänge sind nun vorbei, dir wird nun kein Feedback mehr angezeigt.<br />Wenn du noch Fragen hast, melde dich jetzt bei der Versuchsleitung.<br /><br />Jetzt startet der eigentliche Teil der Studie.<br />Dieser besteht aus 7 Blöcken, mit einer Pause nach jedem Block.<br />Zur Erinnerung:<br /><br />Wenn <b>neutrale</b> Gesichter überwiegen, drücke die Taste <b>S</b>.<br />Wenn <b>emotionale</b> Gesichter überwiegen, drücke die Taste <b>K</b>.<br /><br />Hierbei ist es wichtig, dass du nicht abzählst, sondern den Gesamteindruck möglichst schnell abschätzt.<br /> Bitte antworte so schnell und präzise wie möglich.<br/ ><br />Drücke die Leertaste, um zu beginnen.",
+      choices: [' '],
+	  data: {type: 'instructions'},
+	  on_finish: function (data) {
+	    // increase the block number and reset the trial number for the main part of the study
+		block_num++;
+		trial_num = 1;
+	  },
+    };
+    const pause = {
+      type: jsPsychHtmlKeyboardResponse,
+		      stimulus: 'Pause!<br />Wenn du bereit bist, den nächsten Block zu beginnen, drücke die Leertaste.<br /><br />Zur Erinnerung:<br />Wenn <b>neutrale</b> Gesichter überwiegen, drücke die Taste <b>S</b>.<br />Wenn <b>emotionale</b> Gesichter überwiegen, drücke die Taste <b>K</b>.<br /><br />Hierbei ist es wichtig, dass du nicht abzählst, sondern den Gesamteindruck möglichst schnell abschätzt.<br />Bitte antworte so schnell und präzise wie möglich.',
+      data: {type: 'pause'},
+      on_finish: function (data) {
+        // increase block_num before the start of the next block
+        block_num++;
+      },
+	  choices: [' '],
+    };
+    var cue = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+        if (jsPsych.timelineVariable('happy_faces'))
+          return '<div style="font-size:40px;">glücklich</div>'
+        else
+          return '<div style="font-size:40px;">wütend</div>'
+      },
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+	  data: {type: 'cue'},
+    };
+    // one second interval after each break to give the subject time to get ready
+    var start_interval = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '',
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+	  data: {type: 'start_interval'},
+    };
+    var fixation = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<div style="font-size:60px;">+</div>',
+      choices: "NO_KEYS",
+      trial_duration: 500,
+	  data: {type: 'fixation'},
+    };
+    var trial = 
+    {
+      type: jsPsychMoodOfCrowdResponse,
+      choices: ['s', 'k'],
+      trial_duration: 5000,
+      num_emotional: jsPsych.timelineVariable('num_neutral'),
+      happy_faces: jsPsych.timelineVariable('happy_faces'),
+      data: {type: 'trial'},
+      on_finish: function(data) {
+          data.block_num = block_num;
+          data.is_practice = block_num == 0;
+          data.trial_num = trial_num++;
+      }
+    };
+    var feedback = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function() {
+	var tr = jsPsych.data.getLastTrialData().trials[0];
+	var text = "Zu langsam"
+	if (tr.rt !== null) {
+	  text = tr.correct ? 'Richtig' : 'Falsch';
+	}
+	console.log(tr.rt);
+	console.log(tr.correct);
+	return '<div style="font-size:40px;">' + text + '</div>';
+      },
+      choices: "NO_KEYS",
+      trial_duration: 1000,
+      data: {type: 'feedback'},
+    };
+    var practice_block = {
+      timeline: [
+        cue,
+        fixation,
+        trial,
+	feedback
+      ],
+      timeline_variables: jsPsych.randomization.shuffle(practice_block_variables, 1),
+    }
+    var block = {
+      timeline: [
+        cue,
+        fixation,
+        trial
+      ],
+      timeline_variables: jsPsych.randomization.shuffle(block_variables, 1),
+    }
+    if (TEST) {
+      // smaller number of blocks
+      var main = {
+        timeline: [start_interval, block, pause],
+        sample: {
+          type: 'with-replacement',
+          size: 1  // #blocks - 1 (as last one doesn't need a pause)
+        }
+      }
+    } else {
+      var main = {
+        timeline: [start_interval, block, pause],
+        sample: {
+          type: 'with-replacement',
+          size: 6  // #blocks - 1 (as last one doesn't need a pause)
+        }
+      }
+    }
+    const finish_trial = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<p>Du hast es geschafft! Danke für deine Teilnahme.<br />Hast du Lust auf ein Eis? Dann melde dich gerne bei der Versuchsleitung, um an der Verlosung teilzunehmen.</p>",
+      choices: ['Fertig'],
+      data: {type: 'finish'},
+      on_start: function() {
+		var file_name = 'wsdc_' + rand_subject_id + '_data.csv';
+		jsPsych.data.get().filter([
+		  { type: 'trial' },
+		  { type: 'demographics' },
+		]).localSave('csv', file_name);
+		// disable warning
+		window.onbeforeunload = function() {};
+      }
+    };
+
+    jsPsych.run(
+      [hello_trial, survey_trial, instructions_trial, practice_block, instructions_trial_2, main, start_interval, block, finish_trial]
+    );
+  </script>
+</html>
+
