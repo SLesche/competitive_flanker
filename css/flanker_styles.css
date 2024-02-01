@@ -3,6 +3,10 @@
 body {
     background-color: lightgrey;
     color: black;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
   }
   
 .flanker-stim {
@@ -12,3 +16,21 @@ body {
 .normal-text {
     font-size: 36px;
 }
+
+.upper-center {
+    position: absolute;
+    top: 25vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    border: 5px darkgreen;
+  }
+  
+  .lower-center {
+    position: absolute;
+    bottom: 25vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    border: 5px darkred
+  }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horizontal Split Screen</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Split the screen in half horizontally */
+    .split {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      background-color: #111;
+      color: white;
+    }
+
+    /* Control the bottom half */
+    .bottom {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Content for the top half -->
+  <div class="split">
+    <p>This is the content for the top half.</p>
+  </div>
+
+  <!-- Content for the bottom half -->
+  <div class="split bottom">
+    <p>This is the content for the bottom half.</p>
+  </div>
+
+</body>
+</html>
