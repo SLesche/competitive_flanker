@@ -1,9 +1,3 @@
-// Importing functions
-//import { get_random_zero_or_one } from "./helper_function.js";
-import { get_random_samples_from_list } from "./helper_function.js";
-//import { get_random_letter_from_string } from "./helper_function.js";
-//import { split_string_into_list } from "./helper_function.js";
-
 function map_responses_to_letters(subject_number, letter_combinations) {
   const response_mapping = {};
 
@@ -21,6 +15,20 @@ function map_responses_to_letters(subject_number, letter_combinations) {
   return response_mapping;
 }
 
+function create_partner_response(block_possible_stimuli, mapped_responses){
+  flanker_trial = create_flanker_trial(block_possible_stimuli, mapped_responses)
+  
+  const mean_rt = 450;
+  const sd_rt = 50;
+  const mean_acc = 0.8
+  const partner_rt = draw_random_response_time(mean_rt, sd_rt);
+  const partner_acc = draw_random_accuracy(mean_acc);
+
+  flanker_trial.trial_duration = partner_rt;
+  flanker_trial.choices = "NO_KEYS";
+
+  // Now add a screen simulating feedback about the partners response
+}
 
 function create_flanker_trial(block_possible_stimuli, mapped_responses) {
   const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];

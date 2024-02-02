@@ -19,9 +19,9 @@ let init_date = new Date();
 let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
 let timeline = [];
 
-const n_trials = 10;
-const n_blocks = 2;
-const n_practice = 20;
+const n_trials = 1;
+const n_blocks = 1;
+const n_practice = 1;
 const n_letter_combinations = 2;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
@@ -40,4 +40,4 @@ jsPsych.data.addProperties({
   subject: subject_number,
 });
 
-const experiment_file = "data/" + experiment_short_name + "_" + subject_number + "_" + init_time + ".csv"
+const experiment_file = "./data/" + experiment_short_name + "_" + subject_number + "_" + init_time + ".csv"
