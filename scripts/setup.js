@@ -33,6 +33,7 @@ const trial_duration = 1000;
 const stim_duration = 200;
 const feedback_dur = 400;
 const rsi_duration = 500;
+const fixation_dur = 350;
 
 // Remove later
 const subject_number = 1;

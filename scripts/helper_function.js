@@ -18,6 +18,12 @@ function extract_stim_from_html(string){
     return match ? match[1] : null;
 }
 
+function get_random_rt(mean_rt){
+    const sd_rt = 100;
+    const tau = 300;
+    return jsPsych.randomization.sampleExGaussian(mean_rt, sd_rt, tau, positive = true)
+}
+
 function get_random_repeat(){
     return Math.random() > 0.5 ? 0 : 1;
 }
