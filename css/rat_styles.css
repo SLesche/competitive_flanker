@@ -4,9 +4,8 @@ body {
     background-color: lightgrey;
     color: black;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
   }
   
 .rat-stim {
@@ -17,26 +16,30 @@ body {
     font-size: 36px;
 }
 
-.container {
+.split {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100vh; /* 100% of the viewport height */
-    justify-content: center; /* Center items vertically */
-    align-items: center; /* Center items horizontally */
 }
 
 .upper-half, .lower-half {
-    flex: 1; /* Each section takes equal space */
-    border: 1px solid #ccc; /* Optional: add borders for better visibility */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
 }
 
 /* Additional styling for the content within each half (optional) */
 .upper-half {
-background-color: #f0f0f0;
+    background-color: lightgrey;
+    border: 5px solid green;
+    box-shadow: inset;
+    box-sizing: border-box;
 }
 
 .lower-half {
-background-color: #e0e0e0;
+    background-color: lightgrey;
 }
 
 .upper {
