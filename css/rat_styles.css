@@ -1,0 +1,18 @@
+/* styles.css */
+
+body {
+    background-color: lightgrey;
+    color: black;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+.rat-stim {
+    font-size: 60px;
+}
+
+.normal-text {
+    font-size: 36px;
+}
