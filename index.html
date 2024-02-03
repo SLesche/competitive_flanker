@@ -29,7 +29,7 @@
         on_finish: function(data) {
             // Record accuracy and congruency
             // is accurate if the response is equal to the correct response, which is determined by the previous stimulus
-            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 1){
+            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 0){
                 data.is_repeat = 0;
             } else {
                 let previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
@@ -59,7 +59,7 @@
         on_finish: function(data) {
             // Record accuracy and congruency
             // is accurate if the response is equal to the correct response, which is determined by the previous stimulus
-            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 1){
+            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 0){
                 data.is_repeat = 0;
             } else {
                 let previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
