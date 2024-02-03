@@ -1,6 +1,6 @@
 function get_random_stimulus(){
     const stim = Math.random() > 0.5 ? possible_stimuli[0] : possible_stimuli[1];
-    return `<p class = "rat-stim">${stim}</p>`;
+    return add_lower_div(`<p class = "rat-stim">${stim}</p>`);
 }
 function get_alternate_stimulus(){
     let previous_stim = null;
@@ -10,7 +10,7 @@ function get_alternate_stimulus(){
           previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
     }  
     alternate_stim = possible_stimuli.find(item => item !== extract_stim_from_html(previous_stim));
-    return `<p class = "rat-stim">${alternate_stim}</p>`
+    return add_lower_div(`<p class = "rat-stim">${alternate_stim}</p>`);
 }
 
 function extract_stim_from_html(string){
@@ -20,6 +20,14 @@ function extract_stim_from_html(string){
 
 function get_random_repeat(){
     return Math.random() > 0.5 ? 0 : 1;
+}
+
+function add_lower_div(string){
+    return '<div class = "lower">' + string + '</div>'
+}
+
+function add_upper_div(string){
+    return '<div class = "upper">' + string + '</div>'
 }
 
 function get_correct(stim, is_repeat){

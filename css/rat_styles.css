@@ -16,3 +16,43 @@ body {
 .normal-text {
     font-size: 36px;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* 100% of the viewport height */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+}
+
+.upper-half, .lower-half {
+    flex: 1; /* Each section takes equal space */
+    border: 1px solid #ccc; /* Optional: add borders for better visibility */
+}
+
+/* Additional styling for the content within each half (optional) */
+.upper-half {
+background-color: #f0f0f0;
+}
+
+.lower-half {
+background-color: #e0e0e0;
+}
+
+.upper {
+    position: absolute;
+    top: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%) translateY(25vh) translateY(50%);
+    text-align: center;
+    border: 5px darkgreen;
+}
+
+.lower {
+    position: absolute;
+    bottom: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%) translateY(-25vh) translateY(50%);
+    text-align: center;
+    border: 5px darkred
+}
