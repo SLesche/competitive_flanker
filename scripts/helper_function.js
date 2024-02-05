@@ -1,3 +1,18 @@
+function get_random_zero_or_one() {
+    return Math.round(Math.random());
+}
+
+function get_random_samples_from_list(list, n) {
+    if (n <= 0 || n > list.length) {
+    console.error('Invalid number of samples');
+    return [];
+    }
+
+    const shuffled_list = [...list].sort(() => Math.random() - 0.5);
+    return shuffled_list.slice(0, n);
+}
+
+
 function get_random_stimulus(){
     const stim = Math.random() > 0.5 ? possible_stimuli[0] : possible_stimuli[1];
     return `<p class = "rat-stim">${stim}</p>`;
@@ -13,8 +28,13 @@ function get_alternate_stimulus(){
     return `<p class = "rat-stim">${alternate_stim}</p>`;
 }
 
+function get_random_letter_from_string(input_string) {
+    const random_index = Math.floor(Math.random() * input_string.length);
+    return input_string.charAt(random_index);
+}
+
 function extract_stim_from_html(string){
-    var match = /<p class = "rat-stim">(.+)<\/p>/i.exec(string);
+    var match = /<p class = "flanker-stim">(.+)<\/p>/i.exec(string);
     return match ? match[1] : null;
 }
 
@@ -22,10 +42,6 @@ function get_random_rt(mean_rt){
     const sd_rt = 100;
     const tau = 300;
     return jsPsych.randomization.sampleExGaussian(mean_rt, sd_rt, tau, positive = true)
-}
-
-function get_random_repeat(){
-    return Math.random() > 0.5 ? 0 : 1;
 }
 
 function add_lower_div(string){
@@ -36,11 +52,15 @@ function add_upper_div(string){
     return '<div class = "split"><div class = "upper-half">' + string + '</div><div class = "lower-half"></div></div>'
 }
 
-function get_correct(stim, is_repeat){
-    if (is_repeat){
-        return correct = " ";
+function get_correct(stim, mapped_responses){
+    return mapped_responses[stim];
+}
+
+function get_congruency(stim){
+    // 5 Stimuli, central is third
+    if (stim[1] === stim[3]){
+        return 1;
     } else {
-        const central_stim = extract_stim_from_html(stim);
-        return correct = central_stim.toLowerCase();
+        return 0;
     }
 }

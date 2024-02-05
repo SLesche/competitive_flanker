@@ -25,8 +25,9 @@ const n_practice = 30;
 const n_alternating_start = 5;
 const n_repeat_trials = 20;
 const practice_repeat_percentage = 0;
-const possible_response_keys = ["d", "l", " "];
-const possible_stimuli = ["D", "L"]
+const n_letter_combinations = 2;
+const possible_response_keys = ["d", "l"];
+const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
 
 const percentage_repeat = 0.25;
 const trial_duration = 1000;

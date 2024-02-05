@@ -167,7 +167,7 @@
       data: {type: 'feedback', block_num: block_num}
     };
 
-    let easy_trials = {
+    var easy_trials = {
       timeline: [fixation_cross, easy_trial, feedback, upper_fixation_cross, upper_trial, upper_feedback],
         loop_function: function(data){
             if (trial_num < n_repeat_trials){
@@ -180,7 +180,7 @@
         }
     }
 
-    let trials = {
+    var trials = {
         timeline: [fixation_cross, trial],
         loop_function: function(data){
             if (trial_num < n_trials){
@@ -206,7 +206,7 @@
         }
     }
 
-    let practice_trials = {
+    var practice_trials = {
         timeline: [fixation_cross, trial, feedback],
         loop_function: function(data){
             if (trial_num < n_practice){
@@ -220,7 +220,7 @@
         }
     }
 
-    let experiment_blocks = {
+    var experiment_blocks = {
         timeline: [trials, maybe_blockbreak],
         loop_function: function(data){
             if (block_num < n_blocks){
