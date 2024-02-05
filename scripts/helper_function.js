@@ -4,14 +4,13 @@ function get_random_zero_or_one() {
 
 function get_random_samples_from_list(list, n) {
     if (n <= 0 || n > list.length) {
-    console.error('Invalid number of samples');
-    return [];
+        console.error('Invalid number of samples');
+        return [];
     }
 
     const shuffled_list = [...list].sort(() => Math.random() - 0.5);
     return shuffled_list.slice(0, n);
 }
-
 
 function get_random_stimulus(){
     const stim = Math.random() > 0.5 ? possible_stimuli[0] : possible_stimuli[1];

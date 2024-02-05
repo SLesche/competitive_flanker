@@ -17,62 +17,40 @@
   </head>
   <body></body>
   <script>  
-    var easy_trial = {
-      type: jsPsychHtmlKeyboardResponse,
-        stimulus: function(){
-          return add_lower_div(get_alternate_stimulus());
-        },
-        choices: possible_response_keys,
-        // stimulus_duration: stim_duration, // commented out to disable generation of new div
-        trial_duration: trial_duration,
-        response_ends_trial: true,
-        on_finish: function(data) {
-            // Record accuracy and congruency
-            // is accurate if the response is equal to the correct response, which is determined by the previous stimulus
-            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 0){
-                data.is_repeat = 0;
-            } else {
-                let previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
-                data.is_repeat = data.stimulus === previous_stim ? 1 : 0;
-            }            
-            data.accuracy = data.response === get_correct(data.stimulus, data.is_repeat) ? 1 : 0;
-            data.letter_stim = extract_stim_from_html(data.stimulus);
-            data.type = 'trial';
-            data.is_practice = 1;
-            data.block_num = block_num;
-        }
-    }
-
     var trial = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: function(){
-          if (trial_num < n_alternating_start){
-            return add_lower_div(get_alternate_stimulus());
-          } else {
-            return add_lower_div(get_random_stimulus());
-          }
-        },
-        choices: possible_response_keys,
-        // stimulus_duration: stim_duration, // commented out to disable generation of new div
-        trial_duration: trial_duration,
-        response_ends_trial: true,
-        on_finish: function(data) {
-            // Record accuracy and congruency
-            // is accurate if the response is equal to the correct response, which is determined by the previous stimulus
-            if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 0){
-                data.is_repeat = 0;
-            } else {
-                let previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
-                data.is_repeat = data.stimulus === previous_stim ? 1 : 0;
-            }            
-            data.accuracy = data.response === get_correct(data.stimulus, data.is_repeat) ? 1 : 0;
-            data.letter_stim = extract_stim_from_html(data.stimulus);
-            data.type = 'trial';
-            data.is_practice = block_num === 0 ? 1 : 0;
-            data.block_num = block_num;
-        }
-    };
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function(){
 
+          const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
+          const current_congruency = Math.round(Math.random());
+          const which_central = Math.round(Math.random());
+          const central_stimulus = current_letters[which_central];
+
+          if (current_congruency === 1){
+              flanking_stimulus = central_stimulus;
+          } else {
+              flanking_stimulus = current_letters[1 - which_central];
+          }
+          const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
+          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
+      },
+      choices: possible_response_keys,
+      stimulus_duration: stim_duration,
+      trial_duration: trial_duration, // Adjust as needed
+      response_ends_trial: true,
+      on_finish: function(data) {
+          // Record accuracy and congruency
+          correct_response = get_correct(data.stimulus, mapped_responses);
+          data.accuracy = data.response === correct_response ? 1 : 0;
+
+          data.current_congruency = get_congruency(extract_stim_from_html(data.stimulus));
+          data.letter_stim = extract_stim_from_html(data.stimulus);
+          data.type = 'trial';
+          data.is_practice = block_num === 0 ? 1 : 0;
+          data.block_num = block_num;
+      }
+    };
+    
     var upper_trial = {
         type: jsPsychHtmlKeyboardResponse,
         stimulus: function(){
@@ -110,11 +88,8 @@
       stimulus: function(){
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
-        const last_is_repeat = jsPsych.data.get().last(1).values()[0].is_repeat;
         if (last_trial_correct) {
           return add_lower_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>'); 
-        } else if (last_is_repeat & (last_response !== " ")){
-          return add_lower_div('<p class = "normal-text"><span style = "color: red">Falsch. Bei Wiederholungen die Leertaste drücken</span></p>'); 
         } else if (last_response == null){
           return add_lower_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
         } else {
@@ -149,12 +124,8 @@
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
-        const last_response = jsPsych.data.get().last(1).values()[0].response;
-        const last_is_repeat = jsPsych.data.get().last(1).values()[0].is_repeat;
         if (last_trial_correct) {
           return add_upper_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>'); 
-        } else if (last_is_repeat & (last_response !== " ")){
-          return add_upper_div('<p class = "normal-text"><span style = "color: red">Falsch. Bei Wiederholungen die Leertaste drücken</span></p>'); 
         } else if (last_response == null){
           return add_upper_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
         } else {
@@ -167,19 +138,6 @@
       data: {type: 'feedback', block_num: block_num}
     };
 
-    var easy_trials = {
-      timeline: [fixation_cross, easy_trial, feedback, upper_fixation_cross, upper_trial, upper_feedback],
-        loop_function: function(data){
-            if (trial_num < n_repeat_trials){
-                trial_num ++;
-                return true;
-            } else {
-                trial_num = 0;
-                return false;
-            }
-        }
-    }
-
     var trials = {
         timeline: [fixation_cross, trial],
         loop_function: function(data){
@@ -191,6 +149,36 @@
                 return false;
             }
         }
+    }
+
+    var block_instruction = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function(){
+          // mapped_responses should be defined during loop
+          // mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
+          let block_instruction_message = "";
+
+          let letter_count = 0;
+          
+          for (const letter in mapped_responses) {
+              const responseChar = mapped_responses[letter];
+              block_instruction_message += `"${letter}" -> ${responseChar}, `;
+          
+              // Add a newline after every 2 combinations
+              if (++letter_count % 2 === 0) {
+              block_instruction_message += "<br>";
+              }
+          }  
+          
+          // Remove the trailing comma and space
+          block_instruction_message = block_instruction_message.slice(0, -6);
+
+          return `<p class = "normal-text">${block_instruction_message}</p>`;
+      },
+      choices: "ALL_KEYS",
+      response_ends_trial: true,
+      prompt: "Drücke eine beliebige Taste um fortzufahren.",
+      data: {type: 'instructions', block_num: block_num}
     }
 
     // Self paced break here
@@ -214,16 +202,15 @@
                 return true;
             } else {
                 trial_num = 0;
-                block_num = 1;
                 return false;
             }
         }
     }
 
-    var experiment_blocks = {
-        timeline: [trials, maybe_blockbreak],
+    var practice_block = {
+        timeline: [block_instruction, practice_trials, repeat_practice],
         loop_function: function(data){
-            if (block_num < n_blocks){
+            if (repeat_practice_now){
                 block_num ++;
                 return true;
             } else {
@@ -232,11 +219,43 @@
         }
     }
 
+    var repeat_practice = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: '<p class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </p>',
+      choices: ['Wiederholen', 'Weiter'],
+      data: {type: 'instructions', block_num: block_num},
+      on_finish: function(data){
+        if (data.response === 0){
+          repeat_practice_now = 1;
+        } else {
+          repeat_practice_now = 0;
+        }
+      }
+    }
+
+    var experiment_blocks = {
+        timeline: [practice_block, trials, maybe_blockbreak],
+        loop_function: function(data){
+            if (block_num < n_blocks){
+              block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
+              mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
+              block_num ++;
+              return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     var trial_num = 0;
     var block_num = 0;
+    var repeat_practice_now = 1;
+
+    var block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
+    var mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
 
     // survey trials missing
-    experiment_timeline = [welcome_screen, consent_screen, instructions, easy_trials, nogo_instructions, practice_trials, experiment_begins, experiment_blocks, debriefing];
+    experiment_timeline = [welcome_screen, consent_screen, instructions, practice_block, experiment_begins, experiment_blocks, debriefing];
     jsPsych.run(experiment_timeline);
   </script>
 </html>
