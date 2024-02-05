@@ -180,11 +180,10 @@
           // Remove the trailing comma and space
           block_instruction_message = block_instruction_message.slice(0, -6);
 
-          return `<p class = "normal-text">${block_instruction_message}</p>`;
+          return `<p class = "normal-text">${block_instruction_message} </br> Du kannst jetzt ${n_practice} mal üben. </br> Drücke eine beliebige Taste, um fortzufahren.</p>`;
       },
       choices: "ALL_KEYS",
       response_ends_trial: true,
-      prompt: "Drücke eine beliebige Taste um fortzufahren.",
       data: {type: 'instructions', block_num: block_num}
     }
 
@@ -216,7 +215,7 @@
 
     var repeat_practice = {
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<p class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </p>',
+      stimulus: '<p class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br>Bitte sei dir sicher, dass du weißt wie du auf welche Buchstaben reagieren musst.</br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </p>',
       choices: ['Wiederholen', 'Weiter'],
       data: {type: 'instructions', block_num: block_num},
       on_finish: function(data){
