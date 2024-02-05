@@ -34,7 +34,7 @@ function get_random_letter_from_string(input_string) {
 
 function extract_stim_from_html(string){
     var match = /<p class = "flanker-stim">(.+)<\/p>/i.exec(string);
-    return match ? match[1] : null;
+    return  match[1];
 }
 
 function get_random_rt(mean_rt){
@@ -52,12 +52,13 @@ function add_upper_div(string){
 }
 
 function get_correct(stim, mapped_responses){
-    return mapped_responses[stim];
+    // 5 Stimuli, central is third
+    return mapped_responses[stim[2]];
 }
 
 function get_congruency(stim){
     // 5 Stimuli, central is third
-    if (stim[1] === stim[3]){
+    if (stim[0] === stim[2]){
         return 1;
     } else {
         return 0;

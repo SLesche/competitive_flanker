@@ -20,7 +20,6 @@
     var trial = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
-
           const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
           const current_congruency = Math.round(Math.random());
           const which_central = Math.round(Math.random());
@@ -35,16 +34,16 @@
           return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
       },
       choices: possible_response_keys,
-      stimulus_duration: stim_duration,
+      // stimulus_duration: stim_duration,
       trial_duration: trial_duration, // Adjust as needed
       response_ends_trial: true,
       on_finish: function(data) {
           // Record accuracy and congruency
-          correct_response = get_correct(data.stimulus, mapped_responses);
+          data.letter_stim = extract_stim_from_html(data.stimulus);
+          correct_response = get_correct(data.letter_stim, mapped_responses);
           data.accuracy = data.response === correct_response ? 1 : 0;
 
-          data.current_congruency = get_congruency(extract_stim_from_html(data.stimulus));
-          data.letter_stim = extract_stim_from_html(data.stimulus);
+          data.current_congruency = get_congruency(data.letter_stim);
           data.type = 'trial';
           data.is_practice = block_num === 0 ? 1 : 0;
           data.block_num = block_num;
