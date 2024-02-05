@@ -1,51 +1,46 @@
-function get_random_zero_or_one() {
-    return Math.round(Math.random());
+function get_random_stimulus(){
+    const stim = Math.random() > 0.5 ? possible_stimuli[0] : possible_stimuli[1];
+    return `<p class = "rat-stim">${stim}</p>`;
+}
+function get_alternate_stimulus(){
+    let previous_stim = null;
+    if (jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0] == null | trial_num === 0){
+          previous_stim = possible_stimuli[0];
+    } else {
+          previous_stim = jsPsych.data.get().filter([{type: 'trial'}]).last(1).values()[0].stimulus;
+    }  
+    alternate_stim = possible_stimuli.find(item => item !== extract_stim_from_html(previous_stim));
+    return `<p class = "rat-stim">${alternate_stim}</p>`;
 }
 
-function get_random_samples_from_list(list, n) {
-    if (n <= 0 || n > list.length) {
-    console.error('Invalid number of samples');
-    return [];
+function extract_stim_from_html(string){
+    var match = /<p class = "rat-stim">(.+)<\/p>/i.exec(string);
+    return match ? match[1] : null;
+}
+
+function get_random_rt(mean_rt){
+    const sd_rt = 100;
+    const tau = 300;
+    return jsPsych.randomization.sampleExGaussian(mean_rt, sd_rt, tau, positive = true)
+}
+
+function get_random_repeat(){
+    return Math.random() > 0.5 ? 0 : 1;
+}
+
+function add_lower_div(string){
+    return '<div class = "split"><div class = "upper-half"></div><div class = "lower-half">' + string + '</div></div>'
+}
+
+function add_upper_div(string){
+    return '<div class = "split"><div class = "upper-half">' + string + '</div><div class = "lower-half"></div></div>'
+}
+
+function get_correct(stim, is_repeat){
+    if (is_repeat){
+        return correct = " ";
+    } else {
+        const central_stim = extract_stim_from_html(stim);
+        return correct = central_stim.toLowerCase();
     }
-
-    const shuffled_list = [...list].sort(() => Math.random() - 0.5);
-    return shuffled_list.slice(0, n);
-}
-
-function get_random_letter_from_string(input_string) {
-    const random_index = Math.floor(Math.random() * input_string.length);
-    return input_string.charAt(random_index);
-}
-
-function split_string_into_list(s) {
-    // if s is a string, we return a list of its characters
-    if (typeof s === 'string')
-        return s.split('');
-    else
-        // otherwise we return s:
-        return s;
-}
-
-// Function to generate random response times from a normal distribution
-function draw_from_random_normal(mean, standard_deviation) {
-    let u1 = Math.random();
-    let u2 = Math.random();
-  
-    let z0 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
-    let random_value = mean + z0 * standard_deviation;
-  
-    // Ensure the value is within a reasonable range
-    return Math.max(0, random_value);
-}
-
-function draw_random_response_time(mean_rt, sd_rt){
-    // Log-Normal nehmen 
-    rt = draw_from_random_normal(mean_rt, sd_rt);
-    return rt
-}
-
-function draw_random_accuracy(mean_acc){
-    let u1 = Math.random();
-    let acc = u1 > mean_acc ? 1 : 0;
-    return acc
 }

@@ -1,0 +1,61 @@
+/* styles.css */
+
+body {
+    background-color: lightgrey;
+    color: black;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+.rat-stim {
+    font-size: 60px;
+}
+
+.normal-text {
+    font-size: 36px;
+}
+
+.split {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 100% of the viewport height */
+}
+
+.upper-half, .lower-half {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+/* Additional styling for the content within each half (optional) */
+.upper-half {
+    background-color: lightgrey;
+    border: 5px solid green;
+    box-shadow: inset;
+    box-sizing: border-box;
+}
+
+.lower-half {
+    background-color: lightgrey;
+}
+
+.upper {
+    position: absolute;
+    top: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%) translateY(25vh) translateY(50%);
+    text-align: center;
+    border: 5px darkgreen;
+}
+
+.lower {
+    position: absolute;
+    bottom: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
+    left: 50%;
+    transform: translateX(-50%) translateY(-25vh) translateY(50%);
+    text-align: center;
+    border: 5px darkred
+}
