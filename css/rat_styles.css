@@ -33,29 +33,14 @@ body {
 /* Additional styling for the content within each half (optional) */
 .upper-half {
     background-color: lightgrey;
-    border: 5px solid green;
-    box-shadow: inset;
-    box-sizing: border-box;
 }
 
 .lower-half {
     background-color: lightgrey;
 }
 
-.upper {
-    position: absolute;
-    top: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
-    left: 50%;
-    transform: translateX(-50%) translateY(25vh) translateY(50%);
-    text-align: center;
-    border: 5px darkgreen;
-}
-
-.lower {
-    position: absolute;
-    bottom: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
-    left: 50%;
-    transform: translateX(-50%) translateY(-25vh) translateY(50%);
-    text-align: center;
-    border: 5px darkred
+.active-border {
+    border: 5px solid green;
+    box-shadow: inset;
+    box-sizing: border-box;
 }

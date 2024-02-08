@@ -39,11 +39,11 @@ function get_random_rt(mean_rt){
 }
 
 function add_lower_div(string){
-    return '<div class = "split" id = "split"><div class = "upper-half" id = "upper"></div><div class = "lower-half" id = "lower">' + string + '</div></div>'
+    return '<div class = "split" id = "split"><div class = "upper-half" id = "upper"></div><div class = "lower-half active-border" id = "lower">' + string + '</div></div>'
 }
 
 function add_upper_div(string){
-    return '<div class = "split" id = "split"><div class = "upper-half" id = "upper">' + string + '</div><div class = "lower-half" id = "lower"></div></div>'
+    return '<div class = "split" id = "split"><div class = "upper-half active-border" id = "upper">' + string + '</div><div class = "lower-half" id = "lower"></div></div>'
 }
 
 function get_correct(stim, mapped_responses){
