@@ -32,7 +32,7 @@ function get_random_letter_from_string(input_string) {
 }
 
 function extract_stim_from_html(string){
-    var match = /<p class = "flanker-stim">(.+)<\/p>/i.exec(string);
+    var match = /<p class = "flanker-stim">([A-Z]{5})<\/p>/i.exec(string);
     return  match[1];
 }
 
