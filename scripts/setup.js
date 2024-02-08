@@ -19,16 +19,16 @@ let init_date = new Date();
 let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
 let timeline = [];
 
-const n_trials = 100;
+const n_trials = 50;
 const n_blocks = 5;
 const n_practice = 30;
-const n_letter_combinations = 2;
+const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
 
 const trial_duration = 1000;
 const stim_duration = 200;
-const feedback_dur = 400;
+const feedback_dur = 300;
 const rsi_duration = 500;
 const fixation_dur = 350;
 
@@ -44,6 +44,7 @@ var block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_le
 var mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
 
 var current_score = 0;
+var is_experimental = 0;
 
 // record the condition assignment in the jsPsych data
 // this adds a property called 'subject' and a property called 'condition' to every trial

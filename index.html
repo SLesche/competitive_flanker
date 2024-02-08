@@ -114,12 +114,18 @@
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
         let feedback_msg = "";
+        let correct_feedback = "Richtig";
+        let false_feedback = "Falsch";
+        if (is_experimental){
+          false_feedback = "+0";
+          correct_feedback = "+5";
+        }
         if (last_trial_correct) {
-          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: green">+5</span></p>');
+          feedback_msg = add_lower_div(`<p class = "normal-text"><span style = "color: green">${correct_feedback}</span></p>`);
         } else if (last_response == null){
-          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: red">+0</span></p>'); 
+          feedback_msg = add_lower_div(`<p class = "normal-text"><span style = "color: red">${false_feedback}</span></p>`); 
         } else {
-          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: red">+0</span></p>'); 
+          feedback_msg = add_lower_div(`<p class = "normal-text"><span style = "color: red">${false_feedback}</span></p>`); 
         }
 
         if (is_experimental){
