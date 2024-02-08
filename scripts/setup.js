@@ -35,6 +35,16 @@ const fixation_dur = 350;
 // Remove later
 const subject_number = 1;
 
+// init values
+var trial_num = 0;
+var block_num = 0;
+var repeat_practice_now = 1;
+
+var block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
+var mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
+
+var current_score = 0;
+
 // record the condition assignment in the jsPsych data
 // this adds a property called 'subject' and a property called 'condition' to every trial
 jsPsych.data.addProperties({

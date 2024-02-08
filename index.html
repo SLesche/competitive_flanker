@@ -10,10 +10,10 @@
     <script src="jspsych/dist/plugin-survey.js"></script>
     <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/rat_styles.css">
-    <script src="scripts/setup.js"></script>
     <script src="scripts/helper_function.js"></script>
-    <script src="scripts/instructions.js"></script>
     <script src="scripts/task.js"></script>
+    <script src="scripts/setup.js"></script>
+    <script src="scripts/instructions.js"></script>
     <script src="scripts/debriefing.js"></script>
   </head>
   <body></body>
@@ -32,7 +32,7 @@
               flanking_stimulus = current_letters[1 - which_central];
           }
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
-          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(1)
+          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(current_score)
       },
       choices: possible_response_keys,
       stimulus_duration: stim_duration,
@@ -43,6 +43,10 @@
           data.letter_stim = extract_stim_from_html(data.stimulus);
           correct_response = get_correct(data.letter_stim, mapped_responses);
           data.accuracy = data.response === correct_response ? 1 : 0;
+
+          if (data.accuracy){
+            current_score += 5;
+          }
 
           data.current_congruency = get_congruency(data.letter_stim);
           data.type = 'trial';
@@ -65,7 +69,7 @@
               flanking_stimulus = current_letters[1 - which_central];
           }
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
-          return add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
+          return add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(current_score)
         },
         stimulus_duration: stim_duration, 
         trial_duration: function(){
@@ -96,11 +100,11 @@
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
         if (last_trial_correct) {
-          return add_lower_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>'); 
+          return add_lower_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>') + update_counter(current_score) ; 
         } else if (last_response == null){
-          return add_lower_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
+          return add_lower_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>') + update_counter(current_score); 
         } else {
-          return add_lower_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>'); 
+          return add_lower_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>') + update_counter(current_score); 
         }
       },
       choices: "NO_KEYS", // No keys allowed during fixation
@@ -111,7 +115,7 @@
 
     var fixation_cross = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: add_lower_div('<p class = "normal-text">+</p>'),
+        stimulus: add_lower_div('<p class = "normal-text">+</p>') + update_counter(current_score),
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
@@ -120,7 +124,7 @@
 
     var upper_fixation_cross = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: add_upper_div('<p class = "normal-text">+</p>'),
+        stimulus: add_upper_div('<p class = "normal-text">+</p>') + update_counter(current_score),
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
@@ -133,11 +137,11 @@
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
         if (last_trial_correct) {
-          return add_upper_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>'); 
+          return add_upper_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>') + update_counter(current_score); 
         } else if (last_response == null){
-          return add_upper_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
+          return add_upper_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>') + update_counter(current_score); 
         } else {
-          return add_upper_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>'); 
+          return add_upper_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>') + update_counter(current_score); 
         }
       },
       choices: "NO_KEYS", // No keys allowed during fixation
@@ -253,14 +257,6 @@
             }
         }
     }
-
-    var trial_num = 0;
-    var block_num = 0;
-    var repeat_practice_now = 1;
-
-    var block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
-    var mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
-
     // survey trials missing
     experiment_timeline = [welcome_screen, consent_screen, instructions, practice_block, experiment_begins, experiment_blocks, debriefing];
     jsPsych.run(experiment_timeline);
