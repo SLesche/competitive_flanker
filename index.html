@@ -32,7 +32,12 @@
               flanking_stimulus = current_letters[1 - which_central];
           }
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
-          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(current_score)
+          let stim = add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
+
+          if (is_experimental){
+            stim = stim + update_counter(current_score);
+          }
+          return stim
       },
       choices: possible_response_keys,
       stimulus_duration: stim_duration,
@@ -44,7 +49,7 @@
           correct_response = get_correct(data.letter_stim, mapped_responses);
           data.accuracy = data.response === correct_response ? 1 : 0;
 
-          if (data.accuracy){
+          if (data.accuracy & is_experimental){
             current_score += 5;
           }
 
@@ -54,7 +59,7 @@
           data.block_num = block_num;
       }
     };
-    
+
     var upper_trial = {
         type: partnerFlanker,
         stimulus: function(){
@@ -68,8 +73,13 @@
           } else {
               flanking_stimulus = current_letters[1 - which_central];
           }
-          const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
-          return add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(current_score)
+          const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus;
+          let stim = add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`);
+
+          if (is_experimental){
+            stim = stim + update_counter(current_score);
+          }
+          return stim
         },
         stimulus_duration: stim_duration, 
         trial_duration: function(){
@@ -87,6 +97,10 @@
             correct_response = get_correct(data.letter_stim, mapped_responses);
             data.accuracy = data.response === correct_response ? 1 : 0;
 
+            if (data.accuracy & is_experimental){
+              current_score += 5;
+            }
+
             data.current_congruency = get_congruency(data.letter_stim);
             data.type = 'simulated';
             data.is_practice = block_num === 0 ? 1 : 0;
@@ -99,13 +113,19 @@
       stimulus: function(){
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
+        let feedback_msg = "";
         if (last_trial_correct) {
-          return add_lower_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>') + update_counter(current_score) ; 
+          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>');
         } else if (last_response == null){
-          return add_lower_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>') + update_counter(current_score); 
+          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
         } else {
-          return add_lower_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>') + update_counter(current_score); 
+          feedback_msg = add_lower_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>'); 
         }
+
+        if (is_experimental){
+          feedback_msg = feedback_msg + update_counter(current_score);
+        }
+        return feedback_msg
       },
       choices: "NO_KEYS", // No keys allowed during fixation
       trial_duration: feedback_dur, // Duration of fixation in milliseconds
@@ -115,7 +135,13 @@
 
     var fixation_cross = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: add_lower_div('<p class = "normal-text">+</p>') + update_counter(current_score),
+        stimulus: function(){
+          let fix = add_lower_div('<p class = "normal-text">+</p>');
+          if (is_experimental){
+            fix = fix + update_counter(current_score);
+          }
+          return fix
+        },
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
@@ -124,7 +150,13 @@
 
     var upper_fixation_cross = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: add_upper_div('<p class = "normal-text">+</p>') + update_counter(current_score),
+        stimulus: function(){
+          let fix = add_upper_div('<p class = "normal-text">+</p>');
+          if (is_experimental){
+            fix = fix + update_counter(current_score);
+          }
+          return fix
+        },
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
@@ -134,15 +166,19 @@
     var upper_feedback = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
-        const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
-        const last_response = jsPsych.data.get().last(1).values()[0].response;
+        let feedback_msg = "";
         if (last_trial_correct) {
-          return add_upper_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>') + update_counter(current_score); 
+          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: green">Richtig</span></p>');
         } else if (last_response == null){
-          return add_upper_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>') + update_counter(current_score); 
+          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: red">Zu langsam!</span></p>'); 
         } else {
-          return add_upper_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>') + update_counter(current_score); 
+          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: red">Falsch</span></p>'); 
         }
+
+        if (is_experimental){
+          feedback_msg = feedback_msg + update_counter(current_score);
+        }
+        return feedback_msg
       },
       choices: "NO_KEYS", // No keys allowed during fixation
       trial_duration: feedback_dur, // Duration of fixation in milliseconds
@@ -189,7 +225,10 @@
       },
       choices: "ALL_KEYS",
       response_ends_trial: true,
-      data: {type: 'instructions', block_num: block_num}
+      data: {type: 'instructions', block_num: block_num},
+      on_finish: function(data){
+        is_experimental = 0;
+      }
     }
 
     // Self paced break here
@@ -213,6 +252,7 @@
                 return true;
             } else {
                 trial_num = 0;
+                is_experimental = 1;
                 return false;
             }
         }
@@ -236,7 +276,6 @@
         timeline: [block_instruction, practice_trials, repeat_practice],
         loop_function: function(data){
             if (repeat_practice_now){
-                block_num ++;
                 return true;
             } else {
                 return false;
@@ -253,7 +292,7 @@
               block_num ++;
               return true;
             } else {
-                return false;
+              return false;
             }
         }
     }
