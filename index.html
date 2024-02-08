@@ -67,7 +67,7 @@
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
           return add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
         },
-        //stimulus_duration: stim_duration, // commented out to disable generation of new div
+        stimulus_duration: stim_duration, 
         trial_duration: function(){
           // TODO: replace with participants random response time
           return get_random_rt(400);
