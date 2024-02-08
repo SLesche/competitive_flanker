@@ -32,7 +32,7 @@
               flanking_stimulus = current_letters[1 - which_central];
           }
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
-          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
+          return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`) + update_counter(1)
       },
       choices: possible_response_keys,
       stimulus_duration: stim_duration,

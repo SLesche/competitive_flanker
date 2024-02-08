@@ -28,6 +28,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
+    z-index: 1;
 }
 
 /* Additional styling for the content within each half (optional) */
@@ -43,4 +44,29 @@ body {
     border: 5px solid green;
     box-shadow: inset;
     box-sizing: border-box;
+}
+
+.single-counter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding-left: 6%;
+    padding-right: 6%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    border: 5px solid green;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: lightgreen;
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.counter-text {
+    font-size: 36px;
 }

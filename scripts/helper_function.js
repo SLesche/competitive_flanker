@@ -22,6 +22,10 @@ function get_alternate_stimulus(){
     return `<p class = "rat-stim">${alternate_stim}</p>`;
 }
 
+function update_counter(value){
+    return `<div class = "single-counter" id = "counter"><p class = "counter-text">${value}</p></div>`
+}
+
 function get_random_letter_from_string(input_string) {
     const random_index = Math.floor(Math.random() * input_string.length);
     return input_string.charAt(random_index);
