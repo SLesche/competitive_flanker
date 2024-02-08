@@ -21,7 +21,7 @@ let timeline = [];
 
 const n_trials = 50;
 const n_blocks = 5;
-const n_practice = 30;
+const n_practice = 1;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
@@ -44,7 +44,10 @@ var block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_le
 var mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
 
 var current_score = 0;
+var current_subject_score = 0;
+var current_partner_score = 0;
 var is_experimental = 0;
+var is_cooperative = 1;
 
 // record the condition assignment in the jsPsych data
 // this adds a property called 'subject' and a property called 'condition' to every trial

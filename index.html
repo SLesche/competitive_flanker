@@ -35,7 +35,11 @@
           let stim = add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
 
           if (is_experimental){
-            stim = stim + update_counter(current_score);
+            if (is_cooperative){
+              stim = stim + update_counter(current_score);
+            } else {
+              stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+            }
           }
           return stim
       },
@@ -50,10 +54,15 @@
           data.accuracy = data.response === correct_response ? 1 : 0;
 
           if (data.accuracy & is_experimental){
-            current_score += 5;
+            if (is_cooperative){
+                current_score += 5;
+              } else {
+                current_subject_score += 5;
+              }
           }
 
           data.current_congruency = get_congruency(data.letter_stim);
+          // data.condition = current_condition
           data.type = 'trial';
           data.is_practice = block_num === 0 ? 1 : 0;
           data.block_num = block_num;
@@ -77,7 +86,11 @@
           let stim = add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`);
 
           if (is_experimental){
-            stim = stim + update_counter(current_score);
+            if (is_cooperative){
+              stim = stim + update_counter(current_score);
+            } else {
+              stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+            }
           }
           return stim
         },
@@ -98,7 +111,11 @@
             data.accuracy = data.response === correct_response ? 1 : 0;
 
             if (data.accuracy & is_experimental){
-              current_score += 5;
+              if (is_cooperative){
+                current_score += 5;
+              } else {
+                current_partner_score += 5;
+              }
             }
 
             data.current_congruency = get_congruency(data.letter_stim);
@@ -129,7 +146,11 @@
         }
 
         if (is_experimental){
-          feedback_msg = feedback_msg + update_counter(current_score);
+            if (is_cooperative){
+              feedback_msg = feedback_msg + update_counter(current_score);
+            } else {
+              feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+          }
         }
         return feedback_msg
       },
@@ -144,7 +165,11 @@
         stimulus: function(){
           let fix = add_lower_div('<p class = "normal-text">+</p>');
           if (is_experimental){
-            fix = fix + update_counter(current_score);
+            if (is_cooperative){
+              fix = fix + update_counter(current_score);
+            } else {
+              fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+            }
           }
           return fix
         },
@@ -159,7 +184,11 @@
         stimulus: function(){
           let fix = add_upper_div('<p class = "normal-text">+</p>');
           if (is_experimental){
-            fix = fix + update_counter(current_score);
+            if (is_cooperative){
+              fix = fix + update_counter(current_score);
+            } else {
+              fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+            }
           }
           return fix
         },
@@ -175,17 +204,27 @@
         const last_trial_correct = jsPsych.data.get().last(1).values()[0].accuracy;
         const last_response = jsPsych.data.get().last(1).values()[0].response;
         let feedback_msg = "";
+        let correct_feedback = "Richtig";
+        let false_feedback = "Falsch";
+        if (is_experimental){
+          false_feedback = "+0";
+          correct_feedback = "+5";
+        }
         if (last_trial_correct) {
-          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: green">+5</span></p>');
+          feedback_msg = add_upper_div(`<p class = "normal-text"><span style = "color: green">${correct_feedback}</span></p>`);
         } else if (last_response == null){
-          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: red">+0</span></p>'); 
+          feedback_msg = add_upper_div(`<p class = "normal-text"><span style = "color: red">${false_feedback}</span></p>`); 
         } else {
-          feedback_msg = add_upper_div('<p class = "normal-text"><span style = "color: red">+0</span></p>'); 
+          feedback_msg = add_upper_div(`<p class = "normal-text"><span style = "color: red">${false_feedback}</span></p>`); 
         }
 
         if (is_experimental){
-          feedback_msg = feedback_msg + update_counter(current_score);
-        }
+            if (is_cooperative){
+              feedback_msg = feedback_msg + update_counter(current_score);
+            } else {
+              feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+            }
+          }
         return feedback_msg
       },
       choices: "NO_KEYS", // No keys allowed during fixation

@@ -40,8 +40,14 @@ body {
     background-color: lightgrey;
 }
 
-.active-border {
+.subject-active-border {
     border: 5px solid green;
+    box-shadow: inset;
+    box-sizing: border-box;
+}
+
+.partner-active-border {
+    border: 5px solid red;
     box-shadow: inset;
     box-sizing: border-box;
 }
@@ -50,16 +56,56 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    padding-left: 6%;
-    padding-right: 6%;
-    padding-top: 0.5%;
-    padding-bottom: 0.5%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border-bottom: 5px solid green;
+    border-left: 5px solid green;
+    border-top: 5px solid red;
+    border-right: 5px solid red;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    /* background: linear-gradient(to right top, lightgreen 0%, lightgreen 50%, rgb(240, 73, 73) 50%, rgb(240, 73, 73) 100%); */
+    background-color: lightgreen;
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.subject-counter {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    padding-left: 4%;
+    padding-right: 4%;
     border: 5px solid green;
     box-sizing: border-box;
     box-shadow: inset;
     border-radius: 25px;
     transform: translateX(-50%) translateY(-50%);
     background-color: lightgreen;
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.partner-counter {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border: 5px solid red;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgb(240, 73, 73);
     background-size: contain;
     z-index: 2; /* ensure the overlay appears above other content */
     display: flex;
