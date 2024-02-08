@@ -6,6 +6,7 @@
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-html-button-response.js"></script>
+    <script src="jspsych/dist/plugin-partner-flanker.js"></script>
     <script src="jspsych/dist/plugin-survey.js"></script>
     <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="css/rat_styles.css">
@@ -18,7 +19,7 @@
   <body></body>
   <script>  
     var trial = {
-      type: jsPsychHtmlKeyboardResponse,
+      type: partnerFlanker,
       stimulus: function(){
           const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
           const current_congruency = Math.round(Math.random());
@@ -34,7 +35,7 @@
           return add_lower_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
       },
       choices: possible_response_keys,
-      // stimulus_duration: stim_duration,
+      stimulus_duration: stim_duration,
       trial_duration: trial_duration, // Adjust as needed
       response_ends_trial: true,
       on_finish: function(data) {
@@ -51,7 +52,7 @@
     };
     
     var upper_trial = {
-        type: jsPsychHtmlKeyboardResponse,
+        type: partnerFlanker,
         stimulus: function(){
           const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
           const current_congruency = Math.round(Math.random());
@@ -66,7 +67,7 @@
           const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus
           return add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`)
         },
-        // stimulus_duration: stim_duration, // commented out to disable generation of new div
+        //stimulus_duration: stim_duration, // commented out to disable generation of new div
         trial_duration: function(){
           // TODO: replace with participants random response time
           return get_random_rt(400);
@@ -148,7 +149,7 @@
     var trials = {
         timeline: [fixation_cross, trial, upper_fixation_cross, upper_trial],
         loop_function: function(data){
-            if (trial_num < n_trials){
+            if (trial_num < (n_trials-1)){
                 trial_num ++;
                 return true;
             } else {
@@ -203,7 +204,7 @@
     var practice_trials = {
         timeline: [fixation_cross, trial, feedback],
         loop_function: function(data){
-            if (trial_num < n_practice){
+            if (trial_num < (n_practice-1)){
                 trial_num ++;
                 return true;
             } else {
@@ -242,7 +243,7 @@
     var experiment_blocks = {
         timeline: [practice_block, trials, maybe_blockbreak],
         loop_function: function(data){
-            if (block_num < n_blocks){
+            if (block_num < (n_blocks-1)){
               block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
               mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
               block_num ++;
