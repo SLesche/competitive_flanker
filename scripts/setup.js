@@ -19,9 +19,9 @@ let init_date = new Date();
 let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
 let timeline = [];
 
-const n_trials = 50;
-const n_blocks = 5;
-const n_practice = 30;
+const n_trials = 1;
+const n_blocks = 2;
+const n_practice = 1;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
@@ -49,8 +49,11 @@ var current_partner_score = 0;
 var is_experimental = 0;
 var is_cooperative = 1;
 
-const possible_conditions = ["cooperative", "competivite"];
+const possible_conditions = ["cooperative", "competitive"];
 const random_order = jsPsych.randomization.sampleWithoutReplacement(possible_conditions, 2);
+const conditions = [random_order[0], "control", random_order[1]];
+var current_condition = "experiment_begin";
+var icondition = 0;
 
 // record the condition assignment in the jsPsych data
 // this adds a property called 'subject' and a property called 'condition' to every trial

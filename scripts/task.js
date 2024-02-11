@@ -14,3 +14,22 @@ function map_responses_to_letters(subject_number, letter_combinations) {
   
     return response_mapping;
 }
+
+function get_condition_instructions(condition){
+  let instruction = "";
+  switch (condition) {
+    case 'control':
+      instruction = "Now come control trials";
+      break;
+    case 'competitive':
+      instruction = "Now you compete with the other person";
+      break;
+    case 'cooperative':
+      instruction = "Now you can cooperate with the other person";
+      break;
+    default:
+      instruction = "this is a default, you should not see it";
+  }
+
+  return instruction
+}

@@ -66,6 +66,10 @@
           data.type = 'trial';
           data.is_practice = block_num === 0 ? 1 : 0;
           data.block_num = block_num;
+          data.condition = current_condition;
+          data.common_score = current_score;
+          data.subject_score = current_subject_score;
+          data.partner_score = current_partner_score;
       }
     };
 
@@ -122,6 +126,10 @@
             data.type = 'simulated';
             data.is_practice = block_num === 0 ? 1 : 0;
             data.block_num = block_num;
+            data.condition = current_condition;
+            data.common_score = current_score;
+            data.subject_score = current_subject_score;
+            data.partner_score = current_partner_score;
         }
     };
 
@@ -157,7 +165,11 @@
       choices: "NO_KEYS", // No keys allowed during fixation
       trial_duration: feedback_dur, // Duration of fixation in milliseconds
       response_ends_trial: false,
-      data: {type: 'feedback', block_num: block_num}
+      on_finish: function(data){
+        data.type = 'feedback';
+        data.block_num = block_num;
+        data.condition = current_condition;
+      }
     };
 
     var fixation_cross = {
@@ -176,7 +188,11 @@
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
-        data: {type: 'fixation', block_num: block_num},
+        on_finish: function(data){
+          data.type = 'feedback';
+          data.block_num = block_num;
+          data.condition = current_condition;
+        }
     };
 
     var upper_fixation_cross = {
@@ -195,7 +211,11 @@
         choices: "NO_KEYS", // No keys allowed during fixation
         trial_duration: fixation_dur, // Duration of fixation in milliseconds
         response_ends_trial: false,
-        data: {type: 'fixation', block_num: block_num},
+        on_finish: function(data){
+          data.type = 'feedback';
+          data.block_num = block_num;
+          data.condition = current_condition;
+        }
     };
 
     var upper_feedback = {
@@ -230,7 +250,11 @@
       choices: "NO_KEYS", // No keys allowed during fixation
       trial_duration: feedback_dur, // Duration of fixation in milliseconds
       response_ends_trial: false,
-      data: {type: 'feedback', block_num: block_num}
+      on_finish: function(data){
+        data.type = 'feedback';
+        data.block_num = block_num;
+        data.condition = current_condition;
+      }
     };
 
     var trials = {
@@ -272,9 +296,11 @@
       },
       choices: "ALL_KEYS",
       response_ends_trial: true,
-      data: {type: 'instructions', block_num: block_num},
       on_finish: function(data){
         is_experimental = 0;
+        data.type = "instructions";
+        data.block_num = block_num;
+        data.condition = current_condition;
       }
     }
 
@@ -284,7 +310,11 @@
           type: jsPsychHtmlButtonResponse,
           stimulus: '<p class = "normal-text">Kurze Pause. Drücke eine beliebige Taste, um fortzufahren</p>',
           choices: ['Weiter'],
-          data: {type: 'instructions', block_num: block_num},
+          on_finish: function(data){
+            data.type = 'instructions';
+            data.block_num = block_num;
+            data.condition = current_condition;
+          }
         }],
         conditional_function: function() {
             return block_num + 1 !== n_blocks
@@ -309,8 +339,10 @@
       type: jsPsychHtmlButtonResponse,
       stimulus: '<p class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br>Bitte sei dir sicher, dass du weißt wie du auf welche Buchstaben reagieren musst.</br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </p>',
       choices: ['Wiederholen', 'Weiter'],
-      data: {type: 'instructions', block_num: block_num},
       on_finish: function(data){
+        data.type = 'instructions';
+        data.block_num = block_num;
+        data.condition = current_condition;
         if (data.response === 0){
           repeat_practice_now = 1;
         } else {
@@ -339,12 +371,56 @@
               block_num ++;
               return true;
             } else {
+              block_num = 0;
               return false;
             }
         }
     }
+
+    var condition_instructions = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function(){
+        switch (current_condition){
+          case 'competitive': 
+            is_cooperative = 0;
+            break;
+          case 'cooperative':
+            is_cooperative = 1;
+            break;
+          case 'control':
+            is_cooperative = 1;
+            break;
+          default:
+            console.log("Something with the current_condition went wrong");
+            break;
+        }
+        return get_condition_instructions(current_condition);
+      },
+      choices: "ALL_KEYS",
+      response_ends_trial: true,
+      on_finish: function(data){
+        data.type = 'instructions';
+        data.block_num = block_num;
+        data.condition = current_condition;
+      }
+    }
+
+    var condition_blocks = {
+      timeline: [condition_instructions, experiment_blocks],
+      loop_function: function(data){
+        if (icondition < 3){
+          // Assign condition before increasing loop, because we start at 0
+          current_condition = conditions[icondition];
+          icondition ++;
+          return true
+        } else {
+          current_condition = "experiment_end"
+          return false
+        }
+      }
+    }
     // survey trials missing
-    experiment_timeline = [welcome_screen, consent_screen, instructions, practice_block, experiment_begins, experiment_blocks, debriefing];
+    experiment_timeline = [welcome_screen, consent_screen, instructions, condition_blocks, debriefing];
     jsPsych.run(experiment_timeline);
   </script>
 </html>

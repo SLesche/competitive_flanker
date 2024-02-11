@@ -66,6 +66,11 @@ const instructions = {
     stimulus: 'Drücke "d", wenn ein "D" präsentiert wird. <br/> Drücke "l", wenn ein "L" präsentiert wird. <br/> "D" und "L" wechseln sich meistens ab. Wenn sie sich nicht abwechseln, also z.B. ein "D" nach einem "D" präsentiert wird, drücke die Leertaste. <br/> Im Folgenden wird kurz die Präsentation von "D" und "L" geübt.',
     choices: ['Weiter'],
     data: {type: 'instructions'},
+    on_finish: function(data){
+        // after instructions, the conditions start
+        current_condition = conditions[0];
+        icondition = 1;
+    }
 }
 
 const nogo_instructions = {
