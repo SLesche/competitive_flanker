@@ -34,9 +34,23 @@ function get_random_letter_from_string(input_string) {
     return input_string.charAt(random_index);
 }
 
-function extract_stim_from_html(string){
-    var match = /<p class = "flanker-stim">([A-Z]{5})<\/p>/i.exec(string);
-    return  match[1];
+function extract_stim_from_html(string) {
+    // Check if the string matches the pattern for the flanker-stim element
+    var stimMatch = /<p class = "flanker-stim">([A-Z]{5})<\/p>/i.exec(string);
+    if (stimMatch) {
+        return stimMatch[1];
+    }
+
+    // Check if the string contains a dot element
+    var dotMatch = /<div class = "([a-z]+)-dot"><\/div>/i.exec(string);
+    if (dotMatch) {
+        return dotMatch[1];
+    }
+    console.log(["stim", stimMatch])
+    console.log(["dot", dotMatch])
+    console.log(["no match found for:", string])
+    // If no match found, return null or handle it as appropriate
+    return null; // or throw an error, return a default value, etc.
 }
 
 function get_random_rt(mean_rt){

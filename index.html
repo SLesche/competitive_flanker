@@ -76,32 +76,56 @@
     var upper_trial = {
         type: partnerFlanker,
         stimulus: function(){
-          const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
-          const current_congruency = Math.round(Math.random());
-          const which_central = Math.round(Math.random());
-          const central_stimulus = current_letters[which_central];
-
-          if (current_congruency === 1){
-              flanking_stimulus = central_stimulus;
+          let stim = "";
+          if (current_condition === "control"){
+            stim = add_upper_div(`<div class = "red-dot"></div>`)
+            stim = stim + update_counter(current_score);
           } else {
-              flanking_stimulus = current_letters[1 - which_central];
-          }
-          const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus;
-          let stim = add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`);
+            const current_letters = get_random_samples_from_list(block_possible_stimuli, 1)[0];
+            const current_congruency = Math.round(Math.random());
+            const which_central = Math.round(Math.random());
+            const central_stimulus = current_letters[which_central];
 
-          if (is_experimental){
-            if (is_cooperative){
-              stim = stim + update_counter(current_score);
+            if (current_congruency === 1){
+                flanking_stimulus = central_stimulus;
             } else {
-              stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+                flanking_stimulus = current_letters[1 - which_central];
+            }
+            const current_stimulus = flanking_stimulus + flanking_stimulus + central_stimulus + flanking_stimulus + flanking_stimulus;
+            stim = add_upper_div(`<p class = "flanker-stim">${current_stimulus}</p>`);
+
+            if (is_experimental){
+              if (is_cooperative){
+                stim = stim + update_counter(current_score);
+              } else {
+                stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+              }
             }
           }
           return stim
         },
-        stimulus_duration: stim_duration, 
+        stimulus_duration: function(){
+          let dur = 0;
+
+          if (current_condition === "control"){
+            // Dont stop presenting in control
+            dur = null;
+          } else {
+            dur = stim_duration;
+          }
+          return dur
+        },
         trial_duration: function(){
+          let mean_dur = 400;
+          let dur = 0;
           // TODO: replace with participants random response time
-          return get_random_rt(400);
+          if (current_condition === "control"){
+            // In control, I want to present the red dot for longer because there is no feedback
+            dur = get_random_rt(mean_dur + feedback_dur)
+          } else {
+            dur = get_random_rt(mean_dur)
+          }
+          return dur;
         },
         response_ends_trial: false,
         on_finish: function(data) {
@@ -115,9 +139,9 @@
             data.accuracy = data.response === correct_response ? 1 : 0;
 
             if (data.accuracy & is_experimental){
-              if (is_cooperative){
+              if (current_condition === "cooperative"){
                 current_score += 5;
-              } else {
+              } else if (current_condition === "competitive"){
                 current_partner_score += 5;
               }
             }
@@ -248,7 +272,15 @@
         return feedback_msg
       },
       choices: "NO_KEYS", // No keys allowed during fixation
-      trial_duration: feedback_dur, // Duration of fixation in milliseconds
+      trial_duration: function(){
+          let dur = 0;
+          if (current_condition === "control"){
+            dur = 0;
+          } else {
+            dur = feedback_dur;
+          }
+          return dur;
+      }, // Duration of fixation in milliseconds
       response_ends_trial: false,
       on_finish: function(data){
         data.type = 'feedback';
