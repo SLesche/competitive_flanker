@@ -19,9 +19,9 @@ let init_date = new Date();
 let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
 let timeline = [];
 
-const n_trials = 1;
+const n_trials = 100;
 const n_blocks = 2;
-const n_practice = 1;
+const n_practice = 30;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];

@@ -410,7 +410,7 @@
     }
 
     var condition_instructions = {
-      type: jsPsychHtmlKeyboardResponse,
+      type: jsPsychHtmlButtonResponse,
       stimulus: function(){
         switch (current_condition){
           case 'competitive': 
@@ -428,8 +428,7 @@
         }
         return get_condition_instructions(current_condition);
       },
-      choices: "ALL_KEYS",
-      response_ends_trial: true,
+      choices: ['Weiter'],
       on_finish: function(data){
         data.type = 'instructions';
         data.block_num = block_num;
