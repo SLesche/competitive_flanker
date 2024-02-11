@@ -281,7 +281,7 @@
           
           for (const letter in mapped_responses) {
               const responseChar = mapped_responses[letter];
-              block_instruction_message += `"${letter}" -> ${responseChar}, `;
+              block_instruction_message += `"${letter}" -> ${responseChar.toUpperCase()}, `;
           
               // Add a newline after every 2 combinations
               if (++letter_count % 2 === 0) {
@@ -292,7 +292,7 @@
           // Remove the trailing comma and space
           block_instruction_message = block_instruction_message.slice(0, -6);
 
-          return `<p class = "normal-text">${block_instruction_message} </br> Du kannst jetzt ${n_practice} mal üben. </br> Drücke eine beliebige Taste, um fortzufahren.</p>`;
+          return `<div class = "normal-text">${block_instruction_message}</br>Jetzt beginnen die Übungsdurchgänge. Du kannst jetzt ${n_practice} mal üben.</br>Drücke eine beliebige Taste, um fortzufahren.</div>`;
       },
       choices: "ALL_KEYS",
       response_ends_trial: true,
@@ -308,7 +308,7 @@
     var maybe_blockbreak = {
         timeline: [{
           type: jsPsychHtmlButtonResponse,
-          stimulus: '<p class = "normal-text">Kurze Pause. Drücke eine beliebige Taste, um fortzufahren</p>',
+          stimulus: `<div class = "normal-text">Ein Block ist geschafft. Du hast dir eine kurze Pause verdient. Drücke eine beliebige Taste, um fortzufahren.</div>`,
           choices: ['Weiter'],
           on_finish: function(data){
             data.type = 'instructions';
@@ -337,7 +337,7 @@
 
     var repeat_practice = {
       type: jsPsychHtmlButtonResponse,
-      stimulus: '<p class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br>Bitte sei dir sicher, dass du weißt wie du auf welche Buchstaben reagieren musst.</br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </p>',
+      stimulus: '<div class = "normal-text">Das waren die Übungsdurchgänge. Bist du bereit, das Experiment zu beginnen? </br>Bitte sei dir sicher, dass du weißt wie du auf welche Buchstaben reagieren musst.</br> Drücke "Weiter" um fortzufahren und "Wiederholen" um nochmal zu üben. </div>',
       choices: ['Wiederholen', 'Weiter'],
       on_finish: function(data){
         data.type = 'instructions';
