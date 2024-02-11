@@ -64,7 +64,7 @@
           data.current_congruency = get_congruency(data.letter_stim);
           // data.condition = current_condition
           data.type = 'trial';
-          data.is_practice = block_num === 0 ? 1 : 0;
+          data.is_experimental = is_experimental;
           data.block_num = block_num;
           data.condition = current_condition;
           data.common_score = current_score;
@@ -124,7 +124,7 @@
 
             data.current_congruency = get_congruency(data.letter_stim);
             data.type = 'simulated';
-            data.is_practice = block_num === 0 ? 1 : 0;
+            data.is_experimental = is_experimental;
             data.block_num = block_num;
             data.condition = current_condition;
             data.common_score = current_score;
@@ -317,7 +317,7 @@
           }
         }],
         conditional_function: function() {
-            return block_num + 1 !== n_blocks
+            return (block_num +1) !== n_blocks
         }
     }
 
