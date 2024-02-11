@@ -26,6 +26,9 @@ const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
 
+const possible_dot_colors = ["green", "red"];
+var frequency_first = 0.8;
+
 const trial_duration = 1000;
 const stim_duration = 200;
 const feedback_dur = 300;
