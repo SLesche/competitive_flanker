@@ -8,12 +8,15 @@ body {
     width: 100%;
   }
   
-.rat-stim {
+.flanker-stim {
     font-size: 60px;
 }
 
 .normal-text {
-    font-size: 36px;
+    font-size: 28px;
+    line-height: 1.2;
+    width: 70%;
+    margin: 0 auto;
 }
 
 .split {
@@ -28,34 +31,105 @@ body {
     justify-content: center;
     align-items: center;
     width: 100vw;
+    z-index: 1;
 }
 
 /* Additional styling for the content within each half (optional) */
 .upper-half {
     background-color: lightgrey;
-    border: 5px solid green;
-    box-shadow: inset;
-    box-sizing: border-box;
 }
 
 .lower-half {
     background-color: lightgrey;
 }
 
-.upper {
-    position: absolute;
-    top: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
-    left: 50%;
-    transform: translateX(-50%) translateY(25vh) translateY(50%);
-    text-align: center;
-    border: 5px darkgreen;
+.subject-active-border {
+    border: 5px solid green;
+    box-shadow: inset;
+    box-sizing: border-box;
 }
 
-.lower {
+.partner-active-border {
+    border: 5px solid red;
+    box-shadow: inset;
+    box-sizing: border-box;
+}
+
+.single-counter {
     position: absolute;
-    bottom: 0vh; /* Adjust as needed to fine-tune the vertical positioning */
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-25vh) translateY(50%);
-    text-align: center;
-    border: 5px darkred
+    padding-left: 4%;
+    padding-right: 4%;
+    border-bottom: 5px solid green;
+    border-left: 5px solid green;
+    border-top: 5px solid red;
+    border-right: 5px solid red;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    /* background: linear-gradient(to right top, lightgreen 0%, lightgreen 50%, rgb(240, 73, 73) 50%, rgb(240, 73, 73) 100%); */
+    background-color: lightgreen;
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.subject-counter {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border: 5px solid green;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: lightgreen;
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.partner-counter {
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border: 5px solid red;
+    box-sizing: border-box;
+    box-shadow: inset;
+    border-radius: 25px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgb(240, 73, 73);
+    background-size: contain;
+    z-index: 2; /* ensure the overlay appears above other content */
+    display: flex;
+    justify-content: center; /* horizontally center */
+    align-items: center; /* vertically center */
+}
+
+.counter-text {
+    font-size: 36px;
+}
+
+.red-dot {
+    width: 60px;
+    height: 60px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.green-dot {
+    width: 60px;
+    height: 60px;
+    background-color: green;
+    border-radius: 50%;
 }

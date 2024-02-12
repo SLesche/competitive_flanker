@@ -1,6 +1,6 @@
 const welcome_screen = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: 'Herzlich Willkommen zum Experiment',
+    stimulus: '<div class = "normal-text">Herzlich Willkommen zum Experiment.</div>',
     choices: ['Weiter'],
     data: {type: 'instructions'},
 }
@@ -56,28 +56,41 @@ const survey_trial = {
 
 const consent_screen = {
     type: jsPsychHtmlButtonResponse,
-    stimulus: 'Hier Consent',
+    stimulus: '<div class = "normal-text">Hier Consent</div>',
+    choices: ['Weiter'],
+    data: {type: 'instructions'},
+}
+const general_description = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<div class = "normal-text">Du wirst im Laufe des Experimentes eine Aufgabe entweder alleine, mit einer/m Partner:in oder gegen einer/n Partner:in bearbeiten.</br>Dabei kannst du für jede richtige Antwort Punkte sammeln. Wenn du am Ende unter den besten 25% bist, hast du automatisch die Chance einen Gutschein zu gewinnen.</br>Spielst du alleine, zählen nur deine Punkte in dieser Runde. Spielst du <b>mit</b> einer/m Partner:in, zählen auch richtige Antworten deiner Partnerin. Spielst du <b>gegen</b> eine/n Partner:in, so werden richtige Antworten des Partners oder der Partnerin am Ende von deinem Score abgezogen.</div>',
+    choices: ['Weiter'],
+    data: {type: 'instructions'},
+}
+const partner_description = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<div class = "normal-text">Da wir euch nicht zu zweit an den PC setzen wollen und nicht garantieren können, dass immer zwei Personen da sind, werden eure Antworten aufgezeichnet und als Partner:in für die nächste Person, die an eurem Rechner sitzt, benutzt.</br>Ihr spielt also nicht "live" mit/gegen eine Partner:in, sondern mit der letzten Versuchsperson.</br>Die Antwort auf der oberen Hälfte des Screens ist immer die Antwort des Partners oder der Partnerin (rot), die untere Hälfte ist eure (grün).</div>',
+    choices: ['Weiter'],
+    data: {type: 'instructions'},
+}
+const flanker_description = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<div class = "normal-text">Deine Aufgabe ist es, in einer Reihe von 5 Buchstaben auf den mittleren dieser Buchstaben zu reagieren. </br> Bevor die Aufgabe losgeht, wird dir immer gesagt, mit welcher Taste ("D" oder "L") du auf welchen Buchstaben reagieren musst. </br> Wenn z.B. A -> "D" und B -> "L", dann musst du bei "AA<b>A</b>AA" oder "BB<b>A</b>BB" mit "D" reagieren.</br>Bei AA<b>B</b>AA oder BB<b>B</b>BB müsstest du mit "L" reagieren.</div>',
+    choices: ['Weiter'],
+    data: {type: 'instructions'},
+}
+
+const procedure_instructions = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: `<div class = "normal-text">Für jeden Durchgang wird dir am Anfang angezeigt, auf welchen Buchstaben in der Mitte du wie zu reagieren hast.</br>Dann hast du ${n_practice} Durchgänge Zeit, um einmal ohne Partner:in und ohne Score zu üben, bevor es dann richtig losgeht.</div>`,
     choices: ['Weiter'],
     data: {type: 'instructions'},
 }
 
 const instructions = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: 'Drücke "d", wenn ein "D" präsentiert wird. <br/> Drücke "l", wenn ein "L" präsentiert wird. <br/> "D" und "L" wechseln sich meistens ab. Wenn sie sich nicht abwechseln, also z.B. ein "D" nach einem "D" präsentiert wird, drücke die Leertaste. <br/> Im Folgenden wird kurz die Präsentation von "D" und "L" geübt.',
-    choices: ['Weiter'],
-    data: {type: 'instructions'},
-}
-
-const nogo_instructions = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: 'Drücke weiterhin "d", wenn ein "D" präsentiert wird <br/> Drücke "l", wenn ein "L" präsentiert wird. <br/> Jetzt wird es auch Durchgänge geben, in denen sich "D" und "L" nicht abwechseln. <br/> Wenn z.B. ein "D" nach einem "D" präsentiert wird, drücke die Leertaste.',
-    choices: ['Weiter'],
-    data: {type: 'instructions'},
-}
-
-const experiment_begins = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: 'Die Übungsdurchgänge sind jetzt beendet. <br/> Drücke weiterhin "d", wenn ein "D" präsentiert wird. <br/> Drücke "l", wenn ein "L" präsentiert wird. <br/> Aber drücke die Leertaste, wenn sich "D" und "L" nicht abwechseln.  <br/> Antworte so schnell und präzise wie möglich!',
-    choices: ['Weiter'],
-    data: {type: 'instructions'},
+    timeline: [general_description, partner_description, flanker_description, procedure_instructions],
+    on_finish: function(data){
+        // after instructions, the conditions start
+        current_condition = conditions[0];
+        icondition = 1;
+    }
 }
