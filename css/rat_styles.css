@@ -59,6 +59,10 @@ body {
     box-sizing: border-box;
 }
 
+.inactive-shadow {
+    filter: brightness(20%);
+}
+
 .single-counter {
     position: absolute;
     top: 50%;
