@@ -395,7 +395,7 @@
     }
 
     var experiment_blocks = {
-        timeline: [practice_block, trials, maybe_blockbreak],
+        timeline: [practice_block, trials, maybe_blockbreak], // Here put button-press start or countdown to trials
         loop_function: function(data){
             if (block_num < (n_blocks-1)){
               block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);
