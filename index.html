@@ -302,7 +302,7 @@
         }
     }
 
-    var block_instruction = {
+    var practice_instruction = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: function(){
           // mapped_responses should be defined during loop
@@ -330,6 +330,39 @@
       response_ends_trial: true,
       on_finish: function(data){
         is_experimental = 0;
+        data.type = "instructions";
+        data.block_num = block_num;
+        data.condition = current_condition;
+      }
+    }
+
+    var block_instruction = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: function(){
+          // mapped_responses should be defined during loop
+          // mapped_responses = map_responses_to_letters(subject_number, block_possible_stimuli);
+          let block_instruction_message = "";
+
+          let letter_count = 0;
+          
+          for (const letter in mapped_responses) {
+              const responseChar = mapped_responses[letter];
+              block_instruction_message += `"${letter}" -> ${responseChar.toUpperCase()}, `;
+          
+              // Add a newline after every 2 combinations
+              if (++letter_count % 2 === 0) {
+              block_instruction_message += "<br>";
+              }
+          }  
+          
+          // Remove the trailing comma and space
+          block_instruction_message = block_instruction_message.slice(0, -6);
+
+          return `<div class = "normal-text">${block_instruction_message}</br> Jetzt geht es richtig los! Antworte so schnell und akkurat wie möglich.</br>Drücke eine beliebige Taste, um fortzufahren.</div>`;
+      },
+      choices: "ALL_KEYS",
+      response_ends_trial: true,
+      on_finish: function(data){
         data.type = "instructions";
         data.block_num = block_num;
         data.condition = current_condition;
@@ -384,7 +417,7 @@
     }
 
     var practice_block = {
-        timeline: [block_instruction, practice_trials, repeat_practice],
+        timeline: [practice_instruction, practice_trials, repeat_practice],
         loop_function: function(data){
             if (repeat_practice_now){
                 return true;
@@ -395,7 +428,7 @@
     }
 
     var experiment_blocks = {
-        timeline: [practice_block, trials, maybe_blockbreak], // Here put button-press start or countdown to trials
+        timeline: [practice_block, block_instruction, trials, maybe_blockbreak], // Here put button-press start or countdown to trials
         loop_function: function(data){
             if (block_num < (n_blocks-1)){
               block_possible_stimuli = get_random_samples_from_list(possible_stimuli, n_letter_combinations);

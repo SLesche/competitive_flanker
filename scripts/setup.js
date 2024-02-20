@@ -21,9 +21,9 @@ let timeline = [];
 
 // IN the real experiment, 250 responses.
 // 3*85 pro Block
-const n_trials = 100;
+const n_trials = 10;
 const n_blocks = 2;
-const n_practice = 30;
+const n_practice = 5;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
