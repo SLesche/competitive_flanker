@@ -23,7 +23,7 @@ let timeline = [];
 // 3*85 pro Block
 const n_trials = 85;
 const n_blocks = 3;
-const n_practice = 30;
+const n_practice = 3;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
@@ -33,9 +33,9 @@ var frequency_first = 0.8;
 
 const trial_duration = 1000;
 const stim_duration = 200;
-const feedback_dur = 300;
+const feedback_dur = 450;
 const rsi_duration = 500;
-const fixation_dur = 350;
+const fixation_dur = 200;
 
 // Remove later
 const subject_number = 1;

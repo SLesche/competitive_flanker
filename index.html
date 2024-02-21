@@ -38,7 +38,8 @@
             if (is_cooperative){
               stim = stim + update_counter(current_score);
             } else {
-              stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+              // stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+              stim = stim + update_counter(current_score);
             }
           }
           return stim
@@ -57,7 +58,8 @@
             if (is_cooperative){
                 current_score += 5;
               } else {
-                current_subject_score += 5;
+                // current_subject_score += 5;
+                current_score += 5;
               }
           }
 
@@ -98,7 +100,8 @@
               if (is_cooperative){
                 stim = stim + update_counter(current_score);
               } else {
-                stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+                // stim = stim + update_competitive_counter(current_subject_score, current_partner_score)
+                stim = stim + update_counter(current_score);
               }
             }
           }
@@ -143,6 +146,7 @@
                 current_score += 5;
               } else if (current_condition === "competitive"){
                 current_partner_score += 5;
+                current_score = current_score - 5;
               }
             }
 
@@ -176,12 +180,23 @@
         } else {
           feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
         }
-
-        if (is_experimental){
-            if (is_cooperative){
-              feedback_msg = feedback_msg + update_counter(current_score);
-            } else {
-              feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+        if (last_trial_correct){
+          if (is_experimental){
+              if (is_cooperative){
+                feedback_msg = move_score(feedback_msg, 1) + increaseScore(update_counter(current_score));
+              } else {
+                //feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+                feedback_msg = move_score(feedback_msg, 1) + increaseScore(update_counter(current_score));
+            }
+          }
+        } else {
+          if (is_experimental){
+              if (is_cooperative){
+                feedback_msg = feedback_msg + update_counter(current_score);
+              } else {
+                //feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+                feedback_msg = feedback_msg + update_counter(current_score);
+            }
           }
         }
         return feedback_msg
@@ -204,7 +219,8 @@
             if (is_cooperative){
               fix = fix + update_counter(current_score);
             } else {
-              fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+              // fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+              fix = fix + update_counter(current_score);
             }
           }
           return fix
@@ -227,7 +243,8 @@
             if (is_cooperative){
               fix = fix + update_counter(current_score);
             } else {
-              fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+              // fix = fix + update_competitive_counter(current_subject_score, current_partner_score)
+              fix = fix + update_counter(current_score);
             }
           }
           return fix
@@ -261,14 +278,25 @@
         } else {
           feedback_msg = add_upper_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
         }
-
-        if (is_experimental){
+        if (last_trial_correct){
+          if (is_experimental){
+            if (is_cooperative){
+              feedback_msg = move_score(feedback_msg, 0) + increaseScore(update_counter(current_score));
+            } else {
+              //feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+              feedback_msg = move_score(feedback_msg, 0) + decreaseScore(update_counter(current_score));
+            }
+          }
+        } else {
+          if (is_experimental){
             if (is_cooperative){
               feedback_msg = feedback_msg + update_counter(current_score);
             } else {
-              feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+              //feedback_msg = feedback_msg + update_competitive_counter(current_subject_score, current_partner_score)
+              feedback_msg = feedback_msg + update_counter(current_score);
             }
           }
+        }
         return feedback_msg
       },
       choices: "NO_KEYS", // No keys allowed during fixation
@@ -484,7 +512,8 @@
       }
     }
     // survey trials missing
-    experiment_timeline = [welcome_screen, consent_screen, instructions, condition_blocks, debriefing];
+    // experiment_timeline = [welcome_screen, consent_screen, instructions, condition_blocks, debriefing];
+    experiment_timeline = [instructions, condition_blocks, debriefing];
     jsPsych.run(experiment_timeline);
   </script>
 </html>

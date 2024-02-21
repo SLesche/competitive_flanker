@@ -22,6 +22,43 @@ function update_counter(value){
 function update_competitive_counter(subject_value, partner_value){
     return `<div class = "subject-counter" id = "subject-counter"><p class = "counter-text">${subject_value}</p></div><div class = "partner-counter" id = "partner-counter"><p class = "counter-text">${partner_value}</p></div>`
 }
+
+// Function to increase score
+function increaseScore(counter_html) {
+    // Define the regex pattern to match the opening tag of the div with class "single-counter"
+    var pattern = /<div\s+class\s*=\s*"single-counter"(.*?)>/i;
+    
+    // Add the class "score-increase" to the opening tag
+    var updatedHtmlString = counter_html.replace(pattern, '<div class="single-counter score-increase"$1>');
+
+    return updatedHtmlString;
+}
+
+// Function to decrease score
+function decreaseScore(counter_html) {
+    // Define the regex pattern to match the opening tag of the div with class "single-counter"
+    var pattern = /<div\s+class\s*=\s*"single-counter"(.*?)>/i;
+        
+    // Add the class "score-increase" to the opening tag
+    var updatedHtmlString = counter_html.replace(pattern, '<div class="single-counter score-decrease"$1>');
+
+    return updatedHtmlString;
+}
+
+// Function to move score
+function move_score(feedback_html, direction) {
+    // Define the regex pattern to match the opening tag of the div with class "single-counter"
+    var pattern = /<p\s+class\s*=\s*"feedback-stim"(.*?)>/i;
+        
+    // Add the class "score-increase" to the opening tag
+    if (direction){
+        var updatedHtmlString = feedback_html.replace(pattern, '<p class="feedback-stim score-move-up"$1>');
+    } else {
+        var updatedHtmlString = feedback_html.replace(pattern, '<p class="feedback-stim score-move-down"$1>');      
+    }
+    return updatedHtmlString;
+}
+
 function get_random_letter_from_string(input_string) {
     const random_index = Math.floor(Math.random() * input_string.length);
     return input_string.charAt(random_index);

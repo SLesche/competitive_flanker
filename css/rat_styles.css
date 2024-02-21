@@ -76,7 +76,8 @@ body {
     box-sizing: border-box;
     box-shadow: inset;
     border-radius: 25px;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%); 
+    transform-origin: center;
     /* background: linear-gradient(to right top, lightgreen 0%, lightgreen 50%, rgb(240, 73, 73) 50%, rgb(240, 73, 73) 100%); */
     background-color: lightgreen;
     background-size: contain;
@@ -140,4 +141,76 @@ body {
     height: 60px;
     background-color: green;
     border-radius: 50%;
+}
+
+/* Animation for score increase */
+@keyframes scoreIncrease {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.15); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Animation for score decrease */
+@keyframes scoreDecrease {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(0.85); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes shake {
+    0% { transform: translate(-50%, -50%) translateX(0); }
+    25% { transform: translate(-50%, -50%) translateX(-8px) translateY(-3px);}
+    50% { transform: translate(-50%, -50%) translateX(5px) translateY(2px); }
+    75% { transform: translate(-50%, -50%) translateX(-3px) translateY(-3px); }
+    100% { transform: translate(-50%, -50%) translateX(0) translateY(0); }
+}
+
+.score-increase {
+    animation-name: scoreIncrease;
+    animation-delay: 300ms;
+    animation-duration: 120ms;
+}
+
+.score-decrease {
+    animation-name: shake;
+    animation-delay: 300ms;
+    animation-duration: 60ms;
+}
+
+@keyframes move_score_down {
+    0% {
+        top: 0%;
+        transform: scale(1);
+    }
+    100% {
+        top: 100%;
+        transform: scale(0.2);
+    }
+}
+
+@keyframes move_score_up {
+    0% {
+        top: 0%;
+        transform: scale(1);
+    }
+    100% {
+        top: -50%;
+        transform: scale(0.2);
+    }
+}
+
+.score-move-up {
+    position: relative;
+    animation-fill-mode: forwards; /* Keeps the last keyframe state */
+    animation-name: move_score_up;
+    animation-duration: 200ms;
+    animation-delay: 100ms;
+}
+
+.score-move-down {
+    position: relative;
+    animation-fill-mode: forwards; /* Keeps the last keyframe state */
+    animation-name: move_score_down;
+    animation-duration: 200ms;
+    animation-delay: 100ms;
 }
