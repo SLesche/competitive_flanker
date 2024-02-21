@@ -23,7 +23,7 @@ let timeline = [];
 // 3*85 pro Block
 const n_trials = 85;
 const n_blocks = 3;
-const n_practice = 3;
+const n_practice = 30;
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
