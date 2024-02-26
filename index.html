@@ -269,7 +269,7 @@
         let false_feedback = "Falsch";
         if (is_experimental){
           false_feedback = "+0";
-          correct_feedback = "+5";
+          correct_feedback = is_cooperative ? "+5": "-5";
         }
         if (last_trial_correct) {
           feedback_msg = add_upper_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`);
