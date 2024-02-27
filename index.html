@@ -376,7 +376,7 @@
           
           for (const letter in mapped_responses) {
               const responseChar = mapped_responses[letter];
-              block_instruction_message += `"${letter}" -> ${responseChar.toUpperCase()}, `;
+              block_instruction_message += `"${letter}" -> Taste ${responseChar.toUpperCase()}, `;
           
               // Add a newline after every 2 combinations
               if (++letter_count % 2 === 0) {
