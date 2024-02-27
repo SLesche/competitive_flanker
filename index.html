@@ -135,13 +135,14 @@
         response_ends_trial: false,
         on_finish: function(data) {
             // Simulate a response with given accuracy
-            data.response = "d";
             // Then give the feedback
             // Record accuracy and congruency
             // Record accuracy and congruency
             data.letter_stim = extract_stim_from_html(data.stimulus);
             correct_response = get_correct(data.letter_stim, mapped_responses);
-            data.accuracy = data.response === correct_response ? 1 : 0;
+            data.accuracy = Math.random() < partner_accuracy ? 1 : 0;
+
+            data.response = data.accuracy ? correct_response : correct_response == "d" ? "l" : "d";
 
             if (data.accuracy & is_experimental){
               if (current_condition === "cooperative"){
