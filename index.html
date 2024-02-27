@@ -6,6 +6,7 @@
     <script src="jspsych/dist/jspsych.js"></script>
     <script src="jspsych/dist/plugin-html-keyboard-response.js"></script>
     <script src="jspsych/dist/plugin-html-button-response.js"></script>
+    <script src="jspsych/dist/plugin-instructions.js"></script>
     <script src="jspsych/dist/plugin-partner-flanker.js"></script>
     <script src="jspsych/dist/plugin-survey.js"></script>
     <link href="jspsych/dist/jspsych.css" rel="stylesheet" type="text/css" />
@@ -501,6 +502,8 @@
       timeline: [condition_instructions, experiment_blocks],
       loop_function: function(data){
         if (icondition < 3){
+          // Set score to 0
+          current_score = 0;
           // Assign condition before increasing loop, because we start at 0
           current_condition = conditions[icondition];
           icondition ++;
