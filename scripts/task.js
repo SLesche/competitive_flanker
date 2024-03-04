@@ -27,7 +27,7 @@ function get_condition_instructions(condition){
       instruction = `<div class = "normal-text">In den kommenden Durchgängen wirst du <b>alleine</b> die Aufgabe bearbeiten.</br>Es gibt auch keinen Partner, der die Aufgabe bearbeitet, sondern nur farbige Punkte, die </b>zufällig</b> angezeigt werden.</div>`;
       break;
     case 'competitive':
-      instruction = `<div class = "normal-text">In den kommenden Durchgängen wirst du <b>gegen</b> die vorherige Versuchsperson antreten!</br>Das Punktekonto wird jetzt in zwei geteilt. Du bekommst weiterhin Punkte für richtige Antworten. Deine Gegner:in bekommt allerdings auch Punkte für richtige Antworten.</br>Punkte deiner Gegner:in werden am Ende von deinen Punkten abgezogen.</div>`;
+      instruction = `<div class = "normal-text">In den kommenden Durchgängen wirst du <b>gegen</b> die vorherige Versuchsperson antreten!</br>Du bekommst weiterhin Punkte für richtige Antworten. Deine Gegner:in bekommt allerdings auch Punkte für richtige Antworten. Punkte deiner Gegner:in werden von deinen Punkten auf dem Punktekonte abgezogen.</div>`;
       break;
     case 'cooperative':
       instruction = `<div class = "normal-text">In den kommenden Durchgängen wirst du <b>mit</b> der vorherigen Versuchsperson antreten!</br>Es gibt ein gemeinsames Punktekonto. Du bekommst weiterhin Punkte für richtige Antworten. Richtige Antworten deiner Partner:in zählen auch für euer gemeinsames Punktekonto</div>`;
