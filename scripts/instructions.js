@@ -1,8 +1,26 @@
-const welcome_screen = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: '<div class = "normal-text">Herzlich Willkommen zum Experiment.</div>',
-    choices: ['Weiter'],
+var welcome_screen = {
+    type: jsPsychInstructions,
+    pages: [
+     '<div class = "normal-text">Herzlich Willkommen und vielen Dank für Ihr Interesse an dieser Studie!</br>Im Folgenden werden Sie vor Studienbeginn über die Inhalte und Datenschutzhinweise informiert</div>',
+     '<div class = "normal-text">Im Rahmen des Empirischen Praktikums möchten wir Reaktionszeiten untersuchen und herausfinden, inwiefern diese durch verschiedene Interaktionsbedingungen mit einer anderen Person beeinflusst werden.</br>Die Bearbeitung wird ca. 90 Minuten in Anspruch nehmen. Sofern Sie an der Universität Heidelberg studieren, können Sie für die Teilnahme 1,5 Versuchspersonenstunden bescheinigt bekommen.</div>',
+     '<div class = "normal-text"><i>Bitte lesen Sie sich die folgenden Informationen sorgfältig durch.</i></br>Die Teilnahme an dieser Studie erfolgt freiwillig und ist mit keinen Risiken verbunden. Es steht Ihnen jederzeit frei, Ihre Teilnahme zu widerrufen oder abzubrechen, ohne dass hierdurch ein Nachteil für Sie entsteht. Die Studie dient rein wissenschaftlichen Zwecken und hat keinerlei kommerziellen Hintergrund. Ihre Daten werden anonym erfasst und gespeichert, sodass kein Rückschluss auf Ihre Person möglich ist.</br>Wenn Sie Fragen zu dieser Erhebung haben, wenden Sie sich gerne an die Versuchsleiterin vor Ort.</div>',
+    ],
+    show_clickable_nav: true, 
     data: {type: 'instructions'},
+    on_finish: function(data){
+        // after instructions, the conditions start
+        current_condition = conditions[0];
+        icondition = 1;
+    },
+    button_label_next: "Weiter",
+    button_label_previous: "Zurück",
+}
+
+var consent = {
+    type: jsPsychHtmlButtonResponse,
+    stimulus: '<div class = "normal-text"><b>Teilnahmebestätigung</b></br>Ich habe die Einverständniserklärung gelesen, verstanden und erkläre mich mit den Bedingungen der Teilnahme einverstanden.</div>',
+    choices: ['Ja', 'Nein'],
+    data: {type: 'instructions'}
 }
 
 const survey_trial = {
@@ -73,12 +91,7 @@ var instructions = {
     button_label_next: "Weiter",
     button_label_previous: "Zurück",
 }
-const consent_screen = {
-    type: jsPsychHtmlButtonResponse,
-    stimulus: '<div class = "normal-text">Hier Consent</div>',
-    choices: ['Weiter'],
-    data: {type: 'instructions'},
-}
+/*
 const general_description = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<div class = "normal-text">Du wirst im Laufe des Experimentes eine Aufgabe entweder alleine, mit einer/m Partner:in oder gegen einer/n Partner:in bearbeiten.</br>Dabei kannst du für jede richtige Antwort Punkte sammeln. Wenn du am Ende unter den besten 25% bist, hast du automatisch die Chance einen Gutschein zu gewinnen.</br>Spielst du alleine, zählen nur deine Punkte in dieser Runde. Spielst du <b>mit</b> einer/m Partner:in, zählen auch richtige Antworten deiner Partnerin. Spielst du <b>gegen</b> eine/n Partner:in, so werden richtige Antworten des Partners oder der Partnerin am Ende von deinem Score abgezogen.</div>',
@@ -104,7 +117,7 @@ const procedure_instructions = {
     choices: ['Weiter'],
     data: {type: 'instructions'},
 }
-
+*/
 
 /*
 const instructions = {
