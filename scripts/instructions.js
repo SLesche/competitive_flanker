@@ -20,7 +20,12 @@ var consent = {
     type: jsPsychHtmlButtonResponse,
     stimulus: '<div class = "normal-text"><b>Teilnahmebestätigung</b></br>Ich habe die Einverständniserklärung gelesen, verstanden und erkläre mich mit den Bedingungen der Teilnahme einverstanden.</div>',
     choices: ['Ja', 'Nein'],
-    data: {type: 'instructions'}
+    data: {type: 'instructions'},
+    on_finish: function(data){
+        if(data.response == 1){
+          jsPsych.endExperiment("Das Experiment wurde erfolgreich abgebrochen");
+        }
+      }
 }
 
 const survey_trial = {
