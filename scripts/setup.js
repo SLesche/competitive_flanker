@@ -19,15 +19,15 @@ let init_date = new Date();
 let init_time = init_date.getFullYear() + "_" + (init_date.getMonth() + 1) + "_" + init_date.getDate() + "_" + init_date.getHours() + "_" + init_date.getMinutes() + "_" + init_date.getSeconds()
 let timeline = [];
 
-// IN the real experiment, 250 responses.
-// 3*85 pro Block
-const n_trials = 85; // 85
+// IN the real experiment, 300 responses.
+// 3*100 pro Block
+const n_trials = 100; // 100
 const n_blocks = 3;
 const n_practice = 30; // 30
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
 const possible_stimuli = ["MN", "EF", "OQ", "VU", "IT", "PR"];
-var partner_accuracy = 0.8;
+var partner_accuracy = 0.85;
 
 const possible_dot_colors = ["green", "red"];
 var frequency_first = partner_accuracy;
