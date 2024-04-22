@@ -144,6 +144,8 @@
 
             data.response = data.accuracy ? correct_response : correct_response == "d" ? "l" : "d";
 
+            data.rt = data.trial_duration;
+
             if (data.accuracy & is_experimental){
               if (current_condition === "cooperative"){
                 current_score += 5;
