@@ -242,12 +242,12 @@ body {
 
 .flash-red {
     animation-name: flash_background_red;
-    animation-duration: 100ms;
-    animation-delay: 50ms;
+    animation-duration: 200ms;
+    animation-delay: 0ms;
 }
 
 .flash-green {
     animation-name: flash_background_green;
-    animation-duration: 100ms;
-    animation-delay: 50ms;
+    animation-duration: 200ms;
+    animation-delay: 0ms;
 }

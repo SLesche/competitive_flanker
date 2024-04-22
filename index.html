@@ -182,9 +182,9 @@
           correct_feedback = "+5";
         }
         if (last_trial_correct) {
-          feedback_msg = add_flash(add_lower_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`), "lower", "green");
+          feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`);
         } else {
-          feedback_msg = add_flash(add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`), "lower", "red"); 
+          feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
         }
         if (last_trial_correct){
           if (is_experimental){
