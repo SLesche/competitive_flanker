@@ -48,13 +48,13 @@ body {
 }
 
 .subject-active-border {
-    border: 5px solid green;
+    border: 5px solid blue;
     box-shadow: inset;
     box-sizing: border-box;
 }
 
 .partner-active-border {
-    border: 5px solid red;
+    border: 5px solid orangered;
     box-shadow: inset;
     box-sizing: border-box;
 }
@@ -69,17 +69,17 @@ body {
     left: 50%;
     padding-left: 4%;
     padding-right: 4%;
-    border-bottom: 5px solid green;
-    border-left: 5px solid green;
-    border-top: 5px solid red;
-    border-right: 5px solid red;
+    border-bottom: 5px solid blue;
+    border-left: 5px solid blue;
+    border-top: 5px solid orangered;
+    border-right: 5px solid orangered;
     box-sizing: border-box;
     box-shadow: inset;
     border-radius: 25px;
     transform: translateX(-50%) translateY(-50%); 
     transform-origin: center;
     /* background: linear-gradient(to right top, lightgreen 0%, lightgreen 50%, rgb(240, 73, 73) 50%, rgb(240, 73, 73) 100%); */
-    background-color: lightgreen;
+    background-color: lightblue;
     background-size: contain;
     z-index: 2; /* ensure the overlay appears above other content */
     display: flex;
@@ -112,12 +112,12 @@ body {
     left: 65%;
     padding-left: 4%;
     padding-right: 4%;
-    border: 5px solid red;
+    border: 5px solid orangered;
     box-sizing: border-box;
     box-shadow: inset;
     border-radius: 25px;
     transform: translateX(-50%) translateY(-50%);
-    background-color: rgb(240, 73, 73);
+    background-color: rgb(252, 113, 63);
     background-size: contain;
     z-index: 2; /* ensure the overlay appears above other content */
     display: flex;
@@ -213,4 +213,41 @@ body {
     animation-name: move_score_down;
     animation-duration: 200ms;
     animation-delay: 100ms;
+}
+
+
+@keyframes flash_background_green {
+    0% {
+        background-color: lightgreen;
+    }
+    50% {
+        background-color: green;
+    }
+    100% {
+        background-color: lightgreen;
+    }
+}
+
+@keyframes flash_background_red {
+    0% {
+        background-color: rgb(240, 73, 73);
+    }
+    50% {
+        background-color: red;
+    }
+    100% {
+        background-color: rgb(240, 73, 73);
+    }
+}
+
+.flash-red {
+    animation-name: flash_background_red;
+    animation-duration: 100ms;
+    animation-delay: 50ms;
+}
+
+.flash-green {
+    animation-name: flash_background_green;
+    animation-duration: 100ms;
+    animation-delay: 50ms;
 }
