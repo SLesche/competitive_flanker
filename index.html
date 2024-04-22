@@ -182,11 +182,9 @@
           correct_feedback = "+5";
         }
         if (last_trial_correct) {
-          feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`);
-        } else if (last_response == null){
-          feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
+          feedback_msg = add_flash(add_lower_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`), "lower", "green");
         } else {
-          feedback_msg = add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
+          feedback_msg = add_flash(add_lower_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`), "lower", "red"); 
         }
         if (last_trial_correct){
           if (is_experimental){
@@ -280,11 +278,9 @@
           correct_feedback = is_cooperative ? "+5": "-5";
         }
         if (last_trial_correct) {
-          feedback_msg = add_upper_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`);
-        } else if (last_response == null){
-          feedback_msg = add_upper_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
+          feedback_msg = add_flash(add_upper_div(`<p class = "feedback-stim"><span style = "color: green">${correct_feedback}</span></p>`), "upper", "green");
         } else {
-          feedback_msg = add_upper_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`); 
+          feedback_msg = add_flash(add_upper_div(`<p class = "feedback-stim"><span style = "color: red">${false_feedback}</span></p>`), "upper", "red"); 
         }
         if (last_trial_correct){
           if (is_experimental){

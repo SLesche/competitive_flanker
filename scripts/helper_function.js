@@ -110,3 +110,15 @@ function get_congruency(stim){
         return 0;
     }
 }
+
+function add_flash(html_string, screen_half, color){
+    if (screen_half == "upper") {
+        pattern = "upper-half";
+    } else if (screen_half == "lower"){
+        pattern = "lower-half";
+    }
+
+    var updatedHtmlString = html_string.replace(pattern, pattern + " flash-" + color);
+
+    return updatedHtmlString;
+}
