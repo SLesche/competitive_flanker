@@ -48,13 +48,13 @@ body {
 }
 
 .subject-active-border {
-    border: 5px solid blue;
+    border-top: 5px solid black;
     box-shadow: inset;
     box-sizing: border-box;
 }
 
 .partner-active-border {
-    border: 5px solid orangered;
+    border-bottom: 5px solid black;
     box-shadow: inset;
     box-sizing: border-box;
 }
@@ -71,8 +71,8 @@ body {
     padding-right: 4%;
     border-bottom: 5px solid blue;
     border-left: 5px solid blue;
-    border-top: 5px solid orangered;
-    border-right: 5px solid orangered;
+    border-top: 5px solid magenta;
+    border-right: 5px solid magenta;
     box-sizing: border-box;
     box-shadow: inset;
     border-radius: 25px;
