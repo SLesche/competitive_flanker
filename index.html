@@ -485,7 +485,7 @@
             is_cooperative = 1;
             break;
           case 'control':
-            is_cooperative = 1;
+            is_cooperative = 0;
             break;
           default:
             console.log("Something with the current_condition went wrong");
@@ -505,13 +505,22 @@
       timeline: [condition_instructions, experiment_blocks],
       loop_function: function(data){
         if (icondition < 3){
+          // Update total score
+          total_score = total_score + current_score;
+
           // Set score to 0
           current_score = 0;
+          current_partner_score = 0;
+          current_subject_score = 0;
           // Assign condition before increasing loop, because we start at 0
           current_condition = conditions[icondition];
           icondition ++;
           return true
         } else {
+          // Update total score
+          total_score = total_score + current_score;
+          console.log("Total score: " + total_score)
+
           current_condition = "experiment_end"
           return false
         }

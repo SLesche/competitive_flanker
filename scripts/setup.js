@@ -21,8 +21,8 @@ let timeline = [];
 
 // IN the real experiment, 300 responses.
 // 3*100 pro Block
-const n_trials = 100; // 100
-const n_blocks = 3;
+const n_trials = 1; // 100
+const n_blocks = 1; // 3
 const n_practice = 1; // 30
 const n_letter_combinations = 1;
 const possible_response_keys = ["d", "l"];
@@ -52,6 +52,7 @@ var mapped_responses = map_responses_to_letters(subject_number, block_possible_s
 var current_score = 0;
 var current_subject_score = 0;
 var current_partner_score = 0;
+var total_score = 0;
 var is_experimental = 0;
 var is_cooperative = 1;
 
