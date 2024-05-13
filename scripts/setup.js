@@ -8,8 +8,8 @@ let jsPsych = initJsPsych(
     */  
 );
 
-const experiment_name = "Repetition Alert Task";
-const experiment_short_name = "rep_alert_task";
+const experiment_name = "Flanker Task";
+const experiment_short_name = "comp_flanker";
 let init_date = new Date();
     jsPsych.data.addProperties({
         date: ("0" + init_date.getDate()).slice(-2) + '_' + ("0" + (init_date.getMonth() + 1)).slice(-2) + '_' + init_date.getFullYear(),
@@ -68,4 +68,4 @@ jsPsych.data.addProperties({
   subject: subject_number,
 });
 
-const experiment_file = "./data/" + experiment_short_name + "_" + subject_number + "_" + init_time + ".csv"
+const experiment_file = "data_" + experiment_short_name + "_" + subject_number + "_" + init_time + ".csv"
