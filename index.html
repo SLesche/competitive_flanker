@@ -528,13 +528,8 @@
       }
     }
 
-    var id_trial = {
-      type: jsPsychSurveyText,
-      questions: [{prompt: 'Bitte gib hier die Versuchspersonen-ID ein', name: 'id', required: true}],
-      data: {type: 'instructions'}
-    };
     // survey trials missing
-    experiment_timeline = [id_trial, welcome_screen, consent, survey_trial, instructions, condition_blocks, debriefing];
+    experiment_timeline = [subject_number_entry, welcome_screen, consent, survey_trial, instructions, condition_blocks, debriefing];
     //experiment_timeline = [instructions, condition_blocks, debriefing];
     jsPsych.run(experiment_timeline);
   </script>
